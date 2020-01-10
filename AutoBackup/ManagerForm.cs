@@ -16,5 +16,10 @@ namespace AutoBackup
         {
             InitializeComponent();
         }
+
+        private void ManagerForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

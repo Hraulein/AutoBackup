@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\AutoBackup",
+    "\\AutoBackup\\POJO",
+    "\\AutoBackup\\Utils"
   ],
+  "SelectedNode": "\\AutoBackup.sln",
   "PreviewInSolutionExplorer": false
 }
