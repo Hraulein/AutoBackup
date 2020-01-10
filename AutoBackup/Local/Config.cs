@@ -2,17 +2,89 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace AutoBackup.Local
 {
     static class FilePath
     {
-        private readonly static string AutoBackupRootDir = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\AutoBackup";
-        public readonly static string ConfigFilePath = AutoBackupRootDir + @"\Config";
+        /* 创建文件夹 */
+        private static string CreateDirectoryIfNotExists(string path)
+        {
+            var directory = new DirectoryInfo(path);
+            if (!directory.Exists)
+            {
+                directory.Create();
+            }
+            return path;
+        }
+
+        /* 创建文件 */
+        private static string CreateFileIfNotExists(string path)
+        {
+            var file = new FileInfo(path);
+            if (!file.Exists)
+            {
+                file.Create();
+            }
+            return path;
+        }
+
+        /* 程序数据根目录文件夹 */
+        private readonly static string AutoBackupRootDirPath = new Func<string>(() =>
+        {
+            return CreateDirectoryIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\SK-Studio\AutoBackup");
+        })();
+
+        /* 程序配置文件根目录文件夹 */
+        private readonly static string ConfigFileRootPath = new Func<string>(() =>
+        {
+            return CreateDirectoryIfNotExists(AutoBackupRootDirPath + @"\Config");
+        })();
+
+        /* 程序日志文件根目录文件夹 */
+        private readonly static string LogFileRootPath = new Func<string>(() =>
+        {
+            return CreateDirectoryIfNotExists(AutoBackupRootDirPath + @"\Log");
+        })();
+
+        /* 程序配置文件路径 */
+        public readonly static string SystemConfigFilePath = new Func<string>(() =>
+        {
+            return CreateFileIfNotExists(ConfigFileRootPath + @"\config.json");
+        })();
+
+        /* 程序日志文件路径 */
+        public static string LogFilePath = new Func<string>(() =>
+        {
+            return CreateFileIfNotExists(LogFileRootPath + $"\\{DateTime.Now.ToString("yyyy-MM-dd")}.log");
+        })();
     }
-    class Config
+    static class Config
     {
-        
+        /* 配置的实体类 */
+        private readonly static POJO.Config _config = new Func<POJO.Config>(() =>
+        {
+            try
+            {
+                var config = JsonSerializer.Deserialize<POJO.Config>(File.ReadAllText(FilePath.SystemConfigFilePath));
+                if (config == null)
+                {
+                    config = new POJO.Config();
+                }
+                return config;
+            }
+            catch (JsonException e)
+            {
+                Model.DEBUG.Instance.Log(e.ToString());
+                return new POJO.Config();
+            }
+        })();
+
+        public static string GlobalPath { get { return _config.GlobalPath; } set { _config.GlobalPath = value; } }
+
     }
 }
