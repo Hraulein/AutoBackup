@@ -1,6 +1,6 @@
 ﻿namespace AutoBackup.Model
 {
-    partial class DEBUG
+    partial class SettingForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,14 +30,18 @@
         {
             this.SuspendLayout();
             // 
-            // DEBUG
+            // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Name = "DEBUG";
-            this.Text = "DEBUG";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DEBUG_FormClosing);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "SettingForm";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "设置";
             this.ResumeLayout(false);
 
         }
