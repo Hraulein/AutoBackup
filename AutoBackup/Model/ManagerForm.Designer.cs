@@ -37,7 +37,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "ManagerForm";
             this.Text = "ManagerForm";
-            this.Load += new System.EventHandler(this.ManagerForm_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagerForm_KeyDown);
             this.ResumeLayout(false);
 
         }
