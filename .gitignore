@@ -1,0 +1,15 @@
+.vs/*
+AutoBackup/bin/*
+AutoBackup/obj/*
+.vs/AutoBackup/v16/.suo
+.vs/AutoBackup/v16/Server/sqlite3/storage.ide
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/AutoBackup/v16/.suo
+.vs/AutoBackup/v16/Server/sqlite3/storage.ide
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+AutoBackup/obj/Debug/AutoBackup.csproj.FileListAbsolute.txt
+AutoBackup/obj/Debug/AutoBackup.Model.SettingForm.resources
+AutoBackup/obj/Debug/DesignTimeResolveAssemblyReferences.cache
+AutoBackup/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache

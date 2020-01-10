@@ -27,6 +27,5 @@ namespace AutoBackup
                 Model.DEBUG.Instance.ShowForm();
             }
         }
-
     }
 }
