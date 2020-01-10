@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // ManagerForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "ManagerForm";
             this.Text = "ManagerForm";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ManagerForm_KeyDown);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
