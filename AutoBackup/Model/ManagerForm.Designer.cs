@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "",
             "",
@@ -93,6 +93,7 @@
             this.BtnSettings.TabIndex = 8;
             this.BtnSettings.Text = "进入设置";
             this.BtnSettings.UseVisualStyleBackColor = true;
+            this.BtnSettings.Click += new System.EventHandler(this.BtnSettings_Click);
             // 
             // BtnIncBackup
             // 
@@ -213,7 +214,7 @@
             this.backupList.GridLines = true;
             this.backupList.HideSelection = false;
             this.backupList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.backupList.Location = new System.Drawing.Point(6, 18);
             this.backupList.Name = "backupList";
             this.backupList.ShowItemToolTips = true;

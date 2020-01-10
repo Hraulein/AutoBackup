@@ -28,5 +28,10 @@ namespace AutoBackup
             }
         }
 
+        private void BtnSettings_Click(object sender, EventArgs e)
+        {
+            Model.SettingForm setting = new Model.SettingForm();
+            setting.ShowDialog();
+        }
     }
 }
