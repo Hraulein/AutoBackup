@@ -44,11 +44,7 @@ namespace AutoBackup.Model
         /// </summary>
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("确定离开? 系统不会保留你所做的更改! ", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-            if (result == DialogResult.OK)
-                e.Cancel = false;
-            else
-                e.Cancel = true;
+
         }
 
         /// <summary>
@@ -63,10 +59,16 @@ namespace AutoBackup.Model
             }
         }
 
+        private void SettingForm_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+            Local.Config.SaveConfig();
+        }
+
         /* 全局变量 */
         string RootDir = ""; // 备份的保存目录
         string AutoBackupTime = null; // 自动备份的时间间隔
         string AutoDeleteTime = null; // 自动删除的时间间隔
         string AutoBackupType = null; // 自动备份的类型
+
     }
 }

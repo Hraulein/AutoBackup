@@ -55,13 +55,13 @@
             this.size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lastTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.backupPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.compress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.CmsMouseRightList = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.AddFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DelRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.AttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.compress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ZipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.CmsMouseRightList.SuspendLayout();
@@ -224,6 +224,7 @@
             this.backupList.Size = new System.Drawing.Size(783, 580);
             this.backupList.TabIndex = 8;
             this.backupList.TabStop = false;
+            this.backupList.Tag = "";
             this.backupList.UseCompatibleStateImageBehavior = false;
             this.backupList.View = System.Windows.Forms.View.Details;
             // 
@@ -257,6 +258,11 @@
             this.backupPath.Text = "备份保存路径";
             this.backupPath.Width = 100;
             // 
+            // compress
+            // 
+            this.compress.Text = "是否压缩";
+            this.compress.Width = 100;
+            // 
             // CmsMouseRightList
             // 
             this.CmsMouseRightList.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -286,22 +292,17 @@
             this.DelRowsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.DelRowsToolStripMenuItem.Text = "删除项目";
             // 
-            // AttributeToolStripMenuItem
-            // 
-            this.AttributeToolStripMenuItem.Name = "AttributeToolStripMenuItem";
-            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.AttributeToolStripMenuItem.Text = "项目属性";
-            // 
-            // compress
-            // 
-            this.compress.Text = "是否压缩";
-            this.compress.Width = 100;
-            // 
             // ZipToolStripMenuItem
             // 
             this.ZipToolStripMenuItem.Name = "ZipToolStripMenuItem";
             this.ZipToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.ZipToolStripMenuItem.Text = "压缩备份";
+            // 
+            // AttributeToolStripMenuItem
+            // 
+            this.AttributeToolStripMenuItem.Name = "AttributeToolStripMenuItem";
+            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AttributeToolStripMenuItem.Text = "项目属性";
             // 
             // ManagerForm
             // 

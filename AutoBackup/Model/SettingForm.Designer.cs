@@ -55,6 +55,7 @@
             this.BtnInstructions = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.label4 = new System.Windows.Forms.Label();
             this.GrpWinService.SuspendLayout();
             this.GrpBackupSettings.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -116,6 +117,7 @@
             this.groupBox4.Controls.Add(this.PnlABSettings);
             this.groupBox4.Controls.Add(this.ChkAutoDelete);
             this.groupBox4.Controls.Add(this.ChkAutoBackup);
+            this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Location = new System.Drawing.Point(9, 43);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(457, 178);
@@ -136,7 +138,7 @@
             // PnlADSettings
             // 
             this.PnlADSettings.Controls.Add(this.CmbADTime);
-            this.PnlADSettings.Location = new System.Drawing.Point(108, 51);
+            this.PnlADSettings.Location = new System.Drawing.Point(108, 50);
             this.PnlADSettings.Name = "PnlADSettings";
             this.PnlADSettings.Size = new System.Drawing.Size(340, 36);
             this.PnlADSettings.TabIndex = 0;
@@ -344,6 +346,16 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "©COPYRIGHTS SK-STUDIO. ALL RIGHTS RESERVED";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(114, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 17);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "备份永不过期";
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -362,7 +374,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设置";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingForm_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingForm_FormClosing_1);
             this.GrpWinService.ResumeLayout(false);
             this.GrpBackupSettings.ResumeLayout(false);
             this.GrpBackupSettings.PerformLayout();
@@ -406,5 +418,6 @@
         private System.Windows.Forms.Button BtnDevelopers;
         private System.Windows.Forms.Button BtnInstructions;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.Label label4;
     }
 }
