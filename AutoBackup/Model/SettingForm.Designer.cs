@@ -33,8 +33,6 @@
             this.GrpWinService = new System.Windows.Forms.GroupBox();
             this.GrpBackupSettings = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.BtnCancelSave = new System.Windows.Forms.Button();
-            this.BtnSaveSettings = new System.Windows.Forms.Button();
             this.LabBackupState = new System.Windows.Forms.Label();
             this.PnlADSettings = new System.Windows.Forms.Panel();
             this.CmbADTime = new System.Windows.Forms.ComboBox();
@@ -109,12 +107,10 @@
             this.GrpBackupSettings.Size = new System.Drawing.Size(477, 229);
             this.GrpBackupSettings.TabIndex = 0;
             this.GrpBackupSettings.TabStop = false;
-            this.GrpBackupSettings.Text = "备份设置";
+            this.GrpBackupSettings.Text = "全局设置";
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.BtnCancelSave);
-            this.groupBox4.Controls.Add(this.BtnSaveSettings);
             this.groupBox4.Controls.Add(this.LabBackupState);
             this.groupBox4.Controls.Add(this.PnlADSettings);
             this.groupBox4.Controls.Add(this.PnlABSettings);
@@ -126,25 +122,6 @@
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             // 
-            // BtnCancelSave
-            // 
-            this.BtnCancelSave.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.BtnCancelSave.Location = new System.Drawing.Point(379, 142);
-            this.BtnCancelSave.Name = "BtnCancelSave";
-            this.BtnCancelSave.Size = new System.Drawing.Size(69, 25);
-            this.BtnCancelSave.TabIndex = 4;
-            this.BtnCancelSave.Text = "取消";
-            this.BtnCancelSave.UseVisualStyleBackColor = true;
-            // 
-            // BtnSaveSettings
-            // 
-            this.BtnSaveSettings.Location = new System.Drawing.Point(379, 104);
-            this.BtnSaveSettings.Name = "BtnSaveSettings";
-            this.BtnSaveSettings.Size = new System.Drawing.Size(69, 25);
-            this.BtnSaveSettings.TabIndex = 3;
-            this.BtnSaveSettings.Text = "保存";
-            this.BtnSaveSettings.UseVisualStyleBackColor = true;
-            // 
             // LabBackupState
             // 
             this.LabBackupState.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -152,7 +129,7 @@
             this.LabBackupState.Location = new System.Drawing.Point(6, 104);
             this.LabBackupState.Name = "LabBackupState";
             this.LabBackupState.Padding = new System.Windows.Forms.Padding(5);
-            this.LabBackupState.Size = new System.Drawing.Size(367, 63);
+            this.LabBackupState.Size = new System.Drawing.Size(442, 63);
             this.LabBackupState.TabIndex = 2;
             this.LabBackupState.Text = "是否启用自动备份: 否\r\n是否启用自动删除: 否\r\n下次自动备份时间: yyyy/MM/dd HH:mm";
             // 
@@ -371,7 +348,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.BtnCancelSave;
             this.ClientSize = new System.Drawing.Size(494, 448);
             this.Controls.Add(this.GrpOthers);
             this.Controls.Add(this.GrpBackupSettings);
@@ -422,8 +398,6 @@
         private System.Windows.Forms.CheckBox ChkAutoBackup;
         private System.Windows.Forms.Panel PnlADSettings;
         private System.Windows.Forms.ComboBox CmbADTime;
-        private System.Windows.Forms.Button BtnCancelSave;
-        private System.Windows.Forms.Button BtnSaveSettings;
         private System.Windows.Forms.Label LabBackupState;
         private System.Windows.Forms.Button BtnCheckUpdate;
         private System.Windows.Forms.Button BtnSystemLog;
