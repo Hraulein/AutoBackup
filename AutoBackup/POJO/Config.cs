@@ -10,8 +10,9 @@ namespace AutoBackup.POJO
         {
             public BackupSettings()
             {
-                Enable = true;
                 Path = "";
+                Enable = true;
+                BackupTime = null;
                 ExpiredTime = null;
             }
 
@@ -28,13 +29,13 @@ namespace AutoBackup.POJO
             public bool Enable { get; set; }
 
             /// <summary>
-            /// 自动备份的周期
+            /// 自动备份的周期(未设置请使用null)
             /// </summary>
             [JsonPropertyName("BackupTime")]
             public int? BackupTime { get; set; }
 
             /// <summary>
-            /// 备份类型(全量/增量)
+            /// 备份类型(全量/增量/我全都要)
             /// </summary>
             [JsonConverter(typeof(JsonStringEnumConverter))]
             [JsonPropertyName("BackupType")]

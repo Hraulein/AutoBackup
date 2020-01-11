@@ -22,7 +22,8 @@ namespace AutoBackup.Model
         /// </summary>
         private void SettingForm_Load(object sender, EventArgs e)
         {
-            TxtShowRootDir.Text = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
+            ReadGlobalBackupSettings();
+            Console.WriteLine("备份设置:" + Local.Config.ConfigInstance.GlobalBackupSettings.Enable);
         }
         /// <summary>
         /// 当"启用自动备份"的check属性更改时
@@ -50,17 +51,72 @@ namespace AutoBackup.Model
         private void BtnOptRootDir_Click(object sender, EventArgs e)
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-            {
-                Local.Config.ConfigInstance.GlobalBackupSettings.Path = folderBrowserDialog1.SelectedPath;
-                TxtShowRootDir.Text = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
-            }
+                TxtShowRootDir.Text = folderBrowserDialog1.SelectedPath;
         }
         /// <summary>
-        /// 设置窗体关闭前保存设置
+        /// 窗体关闭前
         /// </summary>
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Local.Config.SaveConfig();
+            SaveBackupConfig();
+        }
+
+        private bool SaveBackupConfig()
+        {
+            Local.Config.ConfigInstance.GlobalBackupSettings.Path = TxtShowRootDir.Text;
+            Local.Config.ConfigInstance.GlobalBackupSettings.Enable = ChkAutoBackup.Checked;
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = CmbABTime.SelectedIndex;
+            if (ChkAllBackup.Checked)
+                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.FullVolume;
+            if (ChkIncBackup.Checked)
+                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.Increment;
+            if (ChkAllBackup.Checked && ChkIncBackup.Checked)
+                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.AllType;
+            if (ChkAutoDelete.Checked)
+            {
+                // Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = ;
+            }
+            return Local.Config.SaveConfig();
+        }
+        /// <summary>
+        /// 读取全局设置并显示在界面
+        /// </summary>
+        private void ReadGlobalBackupSettings()
+        {
+            /* 备份保存目录 */
+            TxtShowRootDir.Text = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
+            /* 自动备份设置 */
+            if (Local.Config.ConfigInstance.GlobalBackupSettings.Enable)
+            {
+                ChkAutoBackup.Checked = true;
+                int? backuptime = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime;
+                CmbABTime.SelectedIndex = (backuptime != null) ? Convert.ToInt16(backuptime) : -1;
+                switch (Local.Config.ConfigInstance.GlobalBackupSettings.BackupType)
+                {
+                    case POJO.EnumExtensions.BackupType.FullVolume:
+                        ChkAllBackup.Checked = true; break;
+                    case POJO.EnumExtensions.BackupType.Increment:
+                        ChkIncBackup.Checked = true; break;
+                    case POJO.EnumExtensions.BackupType.AllType:
+                        ChkAllBackup.Checked = true;
+                        ChkIncBackup.Checked = true;
+                        break;
+                }
+            }
+            else
+            {
+                ChkAutoBackup.Checked = false;
+                CmbABTime.SelectedIndex = -1;
+                ChkAllBackup.Checked = false;
+                ChkIncBackup.Checked = false;
+            }
+            /* 备份有效期 */
+            if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime == null)
+                ChkAutoDelete.Checked = false;
+            else
+            {
+
+            }
         }
     }
 }

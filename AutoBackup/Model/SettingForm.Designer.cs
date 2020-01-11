@@ -140,7 +140,7 @@
             this.PnlADSettings.Controls.Add(this.CmbADTime);
             this.PnlADSettings.Location = new System.Drawing.Point(108, 50);
             this.PnlADSettings.Name = "PnlADSettings";
-            this.PnlADSettings.Size = new System.Drawing.Size(340, 36);
+            this.PnlADSettings.Size = new System.Drawing.Size(340, 51);
             this.PnlADSettings.TabIndex = 0;
             this.PnlADSettings.Visible = false;
             // 

@@ -30,10 +30,10 @@ namespace AutoBackup
         /// </summary>
         private void ManagerForm_Load(object sender, EventArgs e)
         {
-            foreach(var item in Local.Config.ConfigInstance.BackupItemsList)
+            /*foreach(var item in Local.Config.ConfigInstance.BackupItemsList)
             {
                 backupList.Items.Add(ConvertBackupItemsToListViewItem(item));
-            }
+            }*/
         }
         /// <summary>
         /// 转换备份列表文件内容到listview
