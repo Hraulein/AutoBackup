@@ -71,7 +71,7 @@ namespace AutoBackup.Utils
             }
         }
 
-
+        /* 根据文件名获取文件后缀友好名称(可以只输入后缀) */
         public static string GetFileExtTypeName(string filename)
         {
             System.IO.FileInfo fileInfo = new System.IO.FileInfo(filename);
