@@ -33,7 +33,7 @@
             this.GrpWinService = new System.Windows.Forms.GroupBox();
             this.GrpBackupSettings = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.LabBackupState = new System.Windows.Forms.Label();
+            this.LblBackupState = new System.Windows.Forms.Label();
             this.PnlADSettings = new System.Windows.Forms.Panel();
             this.CmbADTime = new System.Windows.Forms.ComboBox();
             this.PnlABSettings = new System.Windows.Forms.Panel();
@@ -43,6 +43,7 @@
             this.ChkAllBackup = new System.Windows.Forms.CheckBox();
             this.ChkAutoDelete = new System.Windows.Forms.CheckBox();
             this.ChkAutoBackup = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.BtnOptRootDir = new System.Windows.Forms.Button();
             this.TxtShowRootDir = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.BtnInstructions = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.label4 = new System.Windows.Forms.Label();
             this.GrpWinService.SuspendLayout();
             this.GrpBackupSettings.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -112,7 +112,7 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.LabBackupState);
+            this.groupBox4.Controls.Add(this.LblBackupState);
             this.groupBox4.Controls.Add(this.PnlADSettings);
             this.groupBox4.Controls.Add(this.PnlABSettings);
             this.groupBox4.Controls.Add(this.ChkAutoDelete);
@@ -124,16 +124,16 @@
             this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             // 
-            // LabBackupState
+            // LblBackupState
             // 
-            this.LabBackupState.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LabBackupState.ForeColor = System.Drawing.Color.Red;
-            this.LabBackupState.Location = new System.Drawing.Point(6, 104);
-            this.LabBackupState.Name = "LabBackupState";
-            this.LabBackupState.Padding = new System.Windows.Forms.Padding(5);
-            this.LabBackupState.Size = new System.Drawing.Size(442, 63);
-            this.LabBackupState.TabIndex = 2;
-            this.LabBackupState.Text = "是否启用自动备份: 否\r\n是否启用自动删除: 否\r\n下次自动备份时间: yyyy/MM/dd HH:mm";
+            this.LblBackupState.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LblBackupState.ForeColor = System.Drawing.Color.Red;
+            this.LblBackupState.Location = new System.Drawing.Point(6, 104);
+            this.LblBackupState.Name = "LblBackupState";
+            this.LblBackupState.Padding = new System.Windows.Forms.Padding(5);
+            this.LblBackupState.Size = new System.Drawing.Size(442, 63);
+            this.LblBackupState.TabIndex = 2;
+            this.LblBackupState.Text = "是否启用自动备份: 否\r\n是否启用自动删除: 否\r\n下次自动备份时间: yyyy/MM/dd HH:mm";
             // 
             // PnlADSettings
             // 
@@ -236,6 +236,16 @@
             this.ChkAutoBackup.Text = "启用自动备份";
             this.ChkAutoBackup.UseVisualStyleBackColor = true;
             this.ChkAutoBackup.CheckedChanged += new System.EventHandler(this.ChkAutoBackup_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(114, 61);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 17);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "备份永不过期";
             // 
             // BtnOptRootDir
             // 
@@ -346,16 +356,6 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "©COPYRIGHTS SK-STUDIO. ALL RIGHTS RESERVED";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(114, 61);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 17);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "备份永不过期";
-            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -410,7 +410,7 @@
         private System.Windows.Forms.CheckBox ChkAutoBackup;
         private System.Windows.Forms.Panel PnlADSettings;
         private System.Windows.Forms.ComboBox CmbADTime;
-        private System.Windows.Forms.Label LabBackupState;
+        private System.Windows.Forms.Label LblBackupState;
         private System.Windows.Forms.Button BtnCheckUpdate;
         private System.Windows.Forms.Button BtnSystemLog;
         private System.Windows.Forms.Button BtnUpdateLog;

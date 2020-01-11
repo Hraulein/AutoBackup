@@ -25,5 +25,10 @@ namespace AutoBackup
             Model.SettingForm setting = new Model.SettingForm();
             setting.ShowDialog();
         }
+
+        private void ManagerForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

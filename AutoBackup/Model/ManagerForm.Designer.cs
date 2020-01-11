@@ -29,13 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""}, -1);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnIncBackup = new System.Windows.Forms.Button();
@@ -216,8 +209,6 @@
             this.backupList.FullRowSelect = true;
             this.backupList.GridLines = true;
             this.backupList.HideSelection = false;
-            this.backupList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
             this.backupList.Location = new System.Drawing.Point(6, 18);
             this.backupList.Name = "backupList";
             this.backupList.ShowItemToolTips = true;
@@ -318,6 +309,7 @@
             this.Name = "ManagerForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AutoBackup v1.0.0";
+            this.Load += new System.EventHandler(this.ManagerForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.CmsMouseRightList.ResumeLayout(false);
