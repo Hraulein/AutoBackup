@@ -89,7 +89,13 @@ namespace AutoBackup.Local
         {
             try
             {
-                var config = JsonSerializer.Deserialize<POJO.Config>(File.ReadAllText(FilePath.SystemConfigFilePath));
+                var config = JsonSerializer.Deserialize<POJO.Config>(File.ReadAllText(FilePath.SystemConfigFilePath), new JsonSerializerOptions
+                {
+                    IgnoreNullValues = true,
+                    IgnoreReadOnlyProperties = true,
+                    AllowTrailingCommas = true,
+                    PropertyNameCaseInsensitive = true
+                });
                 if (config == null)
                 {
                     config = new POJO.Config();
@@ -106,14 +112,23 @@ namespace AutoBackup.Local
         /// <summary>
         /// 保存配置到文件
         /// </summary>
-        public static void SaveConfig()
+        public static bool SaveConfig()
         {
-            using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
+            try
             {
-                streamWriter.Write(JsonSerializer.Serialize(ConfigInstance, new JsonSerializerOptions
+                using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
                 {
-                    WriteIndented = true
-                }).Replace("\\","\\\\"));
+                    streamWriter.Write(JsonSerializer.Serialize(ConfigInstance, new JsonSerializerOptions
+                    {
+                        WriteIndented = true
+                    }));
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                return false;
             }
         }
     }

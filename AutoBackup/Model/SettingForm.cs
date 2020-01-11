@@ -16,12 +16,6 @@ namespace AutoBackup.Model
         {
             InitializeComponent();
         }
-        /// <summary>
-        /// 备份的设置(读取及修改)
-        /// </summary>
-
-        POJO.Config.BackupSettings settings = new POJO.Config.BackupSettings();
-
 
         /// <summary>
         /// 窗体启动
@@ -57,8 +51,8 @@ namespace AutoBackup.Model
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                settings.Path = folderBrowserDialog1.SelectedPath + @"\AutoBackup";
-                TxtShowRootDir.Text = settings.Path;
+                Local.Config.ConfigInstance.GlobalBackupSettings.Path = folderBrowserDialog1.SelectedPath;
+                TxtShowRootDir.Text = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
             }
         }
         /// <summary>
@@ -66,7 +60,7 @@ namespace AutoBackup.Model
         /// </summary>
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            Local.Config.SaveConfig();
         }
     }
 }
