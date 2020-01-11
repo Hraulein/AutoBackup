@@ -47,7 +47,6 @@ namespace AutoBackup.Model
             HideForm();
             e.Cancel = true;
         }
-
         public void Log(string msg, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "", [CallerLineNumber] int sourceLineNumber = 0)
         {
             textBox1.AppendText($"[{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}][{sourceFilePath},{memberName},{sourceLineNumber}] {msg}{Environment.NewLine}");
