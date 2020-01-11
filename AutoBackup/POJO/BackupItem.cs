@@ -38,7 +38,7 @@ namespace AutoBackup.POJO
         public long? Size { get; set; }
 
         /// <summary>
-        /// 备份的源类型(文件夹/文件)
+        /// 备份的源类型(文件/文件夹)
         /// </summary>
         [JsonPropertyName("BackupTaskType")]
         public EnumExtensions.BackupTaskType BackupTaskType { get; set; }
