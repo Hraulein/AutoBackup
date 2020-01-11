@@ -220,7 +220,7 @@
             this.ChkAutoDelete.Name = "ChkAutoDelete";
             this.ChkAutoDelete.Size = new System.Drawing.Size(99, 21);
             this.ChkAutoDelete.TabIndex = 1;
-            this.ChkAutoDelete.Text = "启用自动删除";
+            this.ChkAutoDelete.Text = "备份的有效期";
             this.ChkAutoDelete.UseVisualStyleBackColor = true;
             this.ChkAutoDelete.CheckedChanged += new System.EventHandler(this.ChkAutoDelete_CheckedChanged);
             // 
