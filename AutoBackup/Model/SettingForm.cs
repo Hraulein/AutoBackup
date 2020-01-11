@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AutoBackup.Extensions;
+using static AutoBackup.POJO.Config.BackupSettings;
 
 namespace AutoBackup.Model
 {
@@ -17,33 +21,97 @@ namespace AutoBackup.Model
             InitializeComponent();
         }
 
+        private static class Resource
+        {
+            /// <summary>
+            /// 获取BackupTimeUnitEnum的内容和值
+            /// </summary>
+            public static readonly Tuple<List<string>, List<BackupTimeUnitEnum>> BackupTimeUnitsTuple = new Func<Tuple<List<string>, List<BackupTimeUnitEnum>>>(() =>
+            {
+                var BackupTimeUnits = new List<string>();
+                var SourceNameTag = new List<BackupTimeUnitEnum>();
+                FieldInfo[] fields = typeof(BackupTimeUnitEnum).GetFields();
+                foreach (var fieldInfo in fields)
+                {
+                    if (fieldInfo.Name.Equals("value__"))
+                        continue;
+                    var unit = (BackupTimeUnitEnum)Enum.Parse(typeof(BackupTimeUnitEnum), fieldInfo.Name);
+                    BackupTimeUnits.Add(unit.ToDescriptionString());
+                    SourceNameTag.Add(unit);
+                }
+                return Tuple.Create(BackupTimeUnits, SourceNameTag);
+            })();
+
+            /// <summary>
+            /// 窗口是否初始化完毕
+            /// </summary>
+            public static bool InitFinished = false;
+        }
+
+        /// <summary>
+        /// 备份/过期时间单位
+        /// </summary>
+        public enum BackupTimeUnitEnum
+        {
+            [Description("分钟")]
+            Minute = 1,
+            [Description("小时")]
+            Hour = 60,
+            [Description("天")]
+            Day = 1440,
+        }
+
         /// <summary>
         /// 窗体启动
         /// </summary>
         private void SettingForm_Load(object sender, EventArgs e)
         {
+            Resource.InitFinished = false;
+
+            /* 绑定数据源 */
+            BackupCycleUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1;
+            BackupCycleUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
+            BackupCycleUnit.SelectedIndex = 0;
+
+            /* 绑定数据源 */
+            BackupExpiredUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1;
+            BackupExpiredUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
+            BackupExpiredUnit.SelectedIndex = 0;
+
             ReadGlobalBackupSettings();
             Console.WriteLine("备份设置:" + Local.Config.ConfigInstance.GlobalBackupSettings.Enable);
+            Resource.InitFinished = true;
         }
         /// <summary>
         /// 当"启用自动备份"的check属性更改时
         /// </summary>
         private void ChkAutoBackup_CheckedChanged(object sender, EventArgs e)
         {
-            if (ChkAutoBackup.Checked)
-                PnlABSettings.Visible = true;
-            else
-                PnlABSettings.Visible = false;
+            PnlABSettings.Visible = ChkAutoBackup.Checked;
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.Enable = ChkAutoBackup.Checked;
         }
         /// <summary>
         /// 当"启动自动删除"的check属性更改时
         /// </summary>
         private void ChkAutoDelete_CheckedChanged(object sender, EventArgs e)
         {
+            PnlADSettings.Visible = ChkAutoDelete.Checked;
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
             if (ChkAutoDelete.Checked)
-                PnlADSettings.Visible = true;
+            {
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+            }
             else
-                PnlADSettings.Visible = false;
+            {
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = null;
+            }
         }
         /// <summary>
         /// 选择备份的保存目录
@@ -58,26 +126,10 @@ namespace AutoBackup.Model
         /// </summary>
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            SaveBackupConfig();
+            Debug.WriteLine(Local.Config.SaveConfig());
         }
 
-        private bool SaveBackupConfig()
-        {
-            Local.Config.ConfigInstance.GlobalBackupSettings.Path = TxtShowRootDir.Text;
-            Local.Config.ConfigInstance.GlobalBackupSettings.Enable = ChkAutoBackup.Checked;
-            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = CmbABTime.SelectedIndex;
-            if (ChkAllBackup.Checked)
-                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.FullVolume;
-            if (ChkIncBackup.Checked)
-                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.Increment;
-            if (ChkAllBackup.Checked && ChkIncBackup.Checked)
-                Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = POJO.EnumExtensions.BackupType.AllType;
-            if (ChkAutoDelete.Checked)
-            {
-                // Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = ;
-            }
-            return Local.Config.SaveConfig();
-        }
+
         /// <summary>
         /// 读取全局设置并显示在界面
         /// </summary>
@@ -89,34 +141,90 @@ namespace AutoBackup.Model
             if (Local.Config.ConfigInstance.GlobalBackupSettings.Enable)
             {
                 ChkAutoBackup.Checked = true;
-                int? backuptime = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime;
-                CmbABTime.SelectedIndex = (backuptime != null) ? Convert.ToInt16(backuptime) : -1;
-                switch (Local.Config.ConfigInstance.GlobalBackupSettings.BackupType)
-                {
-                    case POJO.EnumExtensions.BackupType.FullVolume:
-                        ChkAllBackup.Checked = true; break;
-                    case POJO.EnumExtensions.BackupType.Increment:
-                        ChkIncBackup.Checked = true; break;
-                    case POJO.EnumExtensions.BackupType.AllType:
-                        ChkAllBackup.Checked = true;
-                        ChkIncBackup.Checked = true;
-                        break;
-                }
+                /* 获取备份周期,如果为空则使用默认值Day.GetMinutes(1) */
+                BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime ?? BackupTimeUnitEnum.Day.GetMinutes(1);
+                _ = Local.Config.ConfigInstance.GlobalBackupSettings.BackupType == BackupTypeEnum.FullVolume ? ChkAllBackup.Checked = true : ChkIncBackup.Checked = true;
             }
             else
             {
                 ChkAutoBackup.Checked = false;
-                CmbABTime.SelectedIndex = -1;
+                BackupCycleUnit.SelectedIndex = -1;
                 ChkAllBackup.Checked = false;
                 ChkIncBackup.Checked = false;
             }
             /* 备份有效期 */
             if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime == null)
+            {
                 ChkAutoDelete.Checked = false;
+            }
             else
             {
-
+                ChkAutoDelete.Checked = true;
             }
+        }
+
+        private void BackupCycleNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = (BackupCycleUnit.Tag as List<BackupTimeUnitEnum>)[BackupCycleUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupCycleNumericUpDown.Value));
+        }
+
+        private void BackupExpiredNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+        }
+
+        private void BackupCycleUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = (BackupCycleUnit.Tag as List<BackupTimeUnitEnum>)[BackupCycleUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupCycleNumericUpDown.Value));
+        }
+
+        private void BackupExpiredUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+        }
+
+        private void TxtShowRootDir_TextChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.Path = TxtShowRootDir.Text;
+        }
+
+        private void ChkAllBackup_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = BackupTypeEnum.FullVolume;
+        }
+
+
+        private void ChkIncBackup_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!Resource.InitFinished)
+            {
+                return;
+            }
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = BackupTypeEnum.Increment;
         }
     }
 }

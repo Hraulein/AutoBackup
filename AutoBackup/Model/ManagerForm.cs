@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBackup.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -48,7 +49,7 @@ namespace AutoBackup
             };
             listItem.SubItems.AddRange(new ListViewItem.ListViewSubItem[]
             {
-                    new ListViewItem.ListViewSubItem(listItem,POJO.EnumExtensions.ToDescriptionString(backupItem.BackupTaskType)),
+                    new ListViewItem.ListViewSubItem(listItem,backupItem.BackupTaskType.ToDescriptionString()),
                     new ListViewItem.ListViewSubItem(listItem,"√"),
                     new ListViewItem.ListViewSubItem(listItem,backupItem.BackupSourcePath),
                     new ListViewItem.ListViewSubItem(listItem,backupItem.Size?.ToString()??"0"),

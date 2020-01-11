@@ -1,10 +1,19 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 
 namespace AutoBackup.POJO
 {
-    class BackupItem
+    public class BackupItem
     {
+        public enum BackupTaskTypeEnum
+        {
+            [Description("文件夹")]
+            Folder = 0,
+            [Description("文件")]
+            File = 1,
+        }
+
         public BackupItem()
         {
             BackupSettings = new Config.BackupSettings();
@@ -41,6 +50,6 @@ namespace AutoBackup.POJO
         /// 备份的源类型(文件夹/文件)
         /// </summary>
         [JsonPropertyName("BackupTaskType")]
-        public EnumExtensions.BackupTaskType BackupTaskType { get; set; }
+        public BackupTaskTypeEnum BackupTaskType { get; set; }
     }
 }

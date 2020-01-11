@@ -1,13 +1,29 @@
-﻿using System;
+﻿using AutoBackup.Extensions;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
+using static AutoBackup.Model.SettingForm;
 
 namespace AutoBackup.POJO
 {
-    class Config
+    public class Config
     {
         public class BackupSettings
         {
+            public enum BackupTypeEnum
+            {
+                /// <summary>
+                /// 全量备份
+                /// </summary>
+                [Description("全量")]
+                FullVolume = 0,
+                /// <summary>
+                /// 增量备份
+                /// </summary>
+                [Description("增量")]
+                Increment = 1,
+            }
             public BackupSettings()
             {
                 Path = "";
@@ -35,24 +51,31 @@ namespace AutoBackup.POJO
             public int? BackupTime { get; set; }
 
             /// <summary>
-            /// 备份类型(全量/增量/我全都要)
+            /// 备份类型(全量/增量)
             /// </summary>
             [JsonConverter(typeof(JsonStringEnumConverter))]
             [JsonPropertyName("BackupType")]
-            public EnumExtensions.BackupType BackupType { get; set; }
+            public BackupTypeEnum BackupType { get; set; }
 
             /// <summary>
             /// 过期时间, 无限制请使用null
             /// </summary>
             [JsonPropertyName("ExpiredTime")]
-            public DateTime? ExpiredTime { get; set; }
+            public int? ExpiredTime { get; set; }
 
         }
 
 
         public Config()
         {
-            GlobalBackupSettings = new BackupSettings();
+            GlobalBackupSettings = new BackupSettings
+            {
+                BackupTime = BackupTimeUnitEnum.Day.GetMinutes(1),
+                Enable = true,
+                BackupType = BackupSettings.BackupTypeEnum.FullVolume,
+                ExpiredTime = null,
+                Path = "",
+            };
             BackupItemsList = new List<BackupItem>();
         }
 

@@ -35,10 +35,9 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.LblBackupState = new System.Windows.Forms.Label();
             this.PnlADSettings = new System.Windows.Forms.Panel();
-            this.CmbADTime = new System.Windows.Forms.ComboBox();
+            this.BackupExpiredUnit = new System.Windows.Forms.ComboBox();
             this.PnlABSettings = new System.Windows.Forms.Panel();
-            this.CmbABTime = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.BackupCycleUnit = new System.Windows.Forms.ComboBox();
             this.ChkIncBackup = new System.Windows.Forms.CheckBox();
             this.ChkAllBackup = new System.Windows.Forms.CheckBox();
             this.ChkAutoDelete = new System.Windows.Forms.CheckBox();
@@ -56,12 +55,16 @@
             this.BtnInstructions = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.BackupCycleNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.BackupExpiredNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.GrpWinService.SuspendLayout();
             this.GrpBackupSettings.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.PnlADSettings.SuspendLayout();
             this.PnlABSettings.SuspendLayout();
             this.GrpOthers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupExpiredNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnInstallService
@@ -137,32 +140,35 @@
             // 
             // PnlADSettings
             // 
-            this.PnlADSettings.Controls.Add(this.CmbADTime);
+            this.PnlADSettings.Controls.Add(this.BackupExpiredNumericUpDown);
+            this.PnlADSettings.Controls.Add(this.BackupExpiredUnit);
             this.PnlADSettings.Location = new System.Drawing.Point(108, 50);
             this.PnlADSettings.Name = "PnlADSettings";
             this.PnlADSettings.Size = new System.Drawing.Size(340, 51);
             this.PnlADSettings.TabIndex = 0;
             this.PnlADSettings.Visible = false;
             // 
-            // CmbADTime
+            // BackupExpiredUnit
             // 
-            this.CmbADTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbADTime.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.CmbADTime.FormattingEnabled = true;
-            this.CmbADTime.Items.AddRange(new object[] {
-            "   删除一天前的备份",
-            "   删除三天前的备份",
-            "   删除五天前的备份",
-            "   删除七天前的备份"});
-            this.CmbADTime.Location = new System.Drawing.Point(6, 6);
-            this.CmbADTime.Name = "CmbADTime";
-            this.CmbADTime.Size = new System.Drawing.Size(319, 24);
-            this.CmbADTime.TabIndex = 0;
+            this.BackupExpiredUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.BackupExpiredUnit.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BackupExpiredUnit.FormattingEnabled = true;
+            this.BackupExpiredUnit.Items.AddRange(new object[] {
+            "分钟",
+            "小时",
+            "天",
+            "月",
+            "年"});
+            this.BackupExpiredUnit.Location = new System.Drawing.Point(107, 9);
+            this.BackupExpiredUnit.Name = "BackupExpiredUnit";
+            this.BackupExpiredUnit.Size = new System.Drawing.Size(95, 24);
+            this.BackupExpiredUnit.TabIndex = 0;
+            this.BackupExpiredUnit.SelectedIndexChanged += new System.EventHandler(this.BackupExpiredUnit_SelectedIndexChanged);
             // 
             // PnlABSettings
             // 
-            this.PnlABSettings.Controls.Add(this.CmbABTime);
-            this.PnlABSettings.Controls.Add(this.label3);
+            this.PnlABSettings.Controls.Add(this.BackupCycleNumericUpDown);
+            this.PnlABSettings.Controls.Add(this.BackupCycleUnit);
             this.PnlABSettings.Controls.Add(this.ChkIncBackup);
             this.PnlABSettings.Controls.Add(this.ChkAllBackup);
             this.PnlABSettings.Location = new System.Drawing.Point(108, 12);
@@ -171,49 +177,38 @@
             this.PnlABSettings.TabIndex = 5;
             this.PnlABSettings.Visible = false;
             // 
-            // CmbABTime
+            // BackupCycleUnit
             // 
-            this.CmbABTime.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CmbABTime.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.CmbABTime.FormattingEnabled = true;
-            this.CmbABTime.Items.AddRange(new object[] {
-            "   每天",
-            "   三天",
-            "   每周",
-            "   半月"});
-            this.CmbABTime.Location = new System.Drawing.Point(6, 6);
-            this.CmbABTime.Name = "CmbABTime";
-            this.CmbABTime.Size = new System.Drawing.Size(95, 24);
-            this.CmbABTime.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(112, 10);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(63, 17);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "备份类型: ";
+            this.BackupCycleUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.BackupCycleUnit.Font = new System.Drawing.Font("微软雅黑", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BackupCycleUnit.FormattingEnabled = true;
+            this.BackupCycleUnit.Location = new System.Drawing.Point(107, 6);
+            this.BackupCycleUnit.Name = "BackupCycleUnit";
+            this.BackupCycleUnit.Size = new System.Drawing.Size(95, 24);
+            this.BackupCycleUnit.TabIndex = 0;
+            this.BackupCycleUnit.SelectedIndexChanged += new System.EventHandler(this.BackupCycleUnit_SelectedIndexChanged);
             // 
             // ChkIncBackup
             // 
             this.ChkIncBackup.AutoSize = true;
-            this.ChkIncBackup.Location = new System.Drawing.Point(258, 10);
+            this.ChkIncBackup.Location = new System.Drawing.Point(281, 10);
             this.ChkIncBackup.Name = "ChkIncBackup";
-            this.ChkIncBackup.Size = new System.Drawing.Size(75, 21);
+            this.ChkIncBackup.Size = new System.Drawing.Size(51, 21);
             this.ChkIncBackup.TabIndex = 3;
-            this.ChkIncBackup.Text = "增量备份";
+            this.ChkIncBackup.Text = "增量";
             this.ChkIncBackup.UseVisualStyleBackColor = true;
+            this.ChkIncBackup.CheckedChanged += new System.EventHandler(this.ChkIncBackup_CheckedChanged);
             // 
             // ChkAllBackup
             // 
             this.ChkAllBackup.AutoSize = true;
-            this.ChkAllBackup.Location = new System.Drawing.Point(181, 10);
+            this.ChkAllBackup.Location = new System.Drawing.Point(217, 10);
             this.ChkAllBackup.Name = "ChkAllBackup";
-            this.ChkAllBackup.Size = new System.Drawing.Size(75, 21);
+            this.ChkAllBackup.Size = new System.Drawing.Size(51, 21);
             this.ChkAllBackup.TabIndex = 2;
-            this.ChkAllBackup.Text = "全部备份";
+            this.ChkAllBackup.Text = "全量";
             this.ChkAllBackup.UseVisualStyleBackColor = true;
+            this.ChkAllBackup.CheckedChanged += new System.EventHandler(this.ChkAllBackup_CheckedChanged);
             // 
             // ChkAutoDelete
             // 
@@ -264,6 +259,7 @@
             this.TxtShowRootDir.ReadOnly = true;
             this.TxtShowRootDir.Size = new System.Drawing.Size(273, 23);
             this.TxtShowRootDir.TabIndex = 0;
+            this.TxtShowRootDir.TextChanged += new System.EventHandler(this.TxtShowRootDir_TextChanged);
             // 
             // label1
             // 
@@ -356,6 +352,52 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "©COPYRIGHTS SK-STUDIO. ALL RIGHTS RESERVED";
             // 
+            // BackupCycleNumericUpDown
+            // 
+            this.BackupCycleNumericUpDown.Location = new System.Drawing.Point(9, 6);
+            this.BackupCycleNumericUpDown.Maximum = new decimal(new int[] {
+            876000,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.Name = "BackupCycleNumericUpDown";
+            this.BackupCycleNumericUpDown.Size = new System.Drawing.Size(80, 23);
+            this.BackupCycleNumericUpDown.TabIndex = 2;
+            this.BackupCycleNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.ValueChanged += new System.EventHandler(this.BackupCycleNumericUpDown_ValueChanged);
+            // 
+            // BackupExpiredNumericUpDown
+            // 
+            this.BackupExpiredNumericUpDown.Location = new System.Drawing.Point(9, 9);
+            this.BackupExpiredNumericUpDown.Maximum = new decimal(new int[] {
+            876000,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.Name = "BackupExpiredNumericUpDown";
+            this.BackupExpiredNumericUpDown.Size = new System.Drawing.Size(80, 23);
+            this.BackupExpiredNumericUpDown.TabIndex = 2;
+            this.BackupExpiredNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.ValueChanged += new System.EventHandler(this.BackupExpiredNumericUpDown_ValueChanged);
+            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -386,6 +428,8 @@
             this.PnlABSettings.PerformLayout();
             this.GrpOthers.ResumeLayout(false);
             this.GrpOthers.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupExpiredNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -401,16 +445,15 @@
         private System.Windows.Forms.TextBox TxtShowRootDir;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel PnlABSettings;
-        private System.Windows.Forms.ComboBox CmbABTime;
+        private System.Windows.Forms.ComboBox BackupCycleUnit;
         private System.Windows.Forms.CheckBox ChkIncBackup;
         private System.Windows.Forms.CheckBox ChkAllBackup;
         private System.Windows.Forms.CheckBox ChkAutoDelete;
         private System.Windows.Forms.CheckBox ChkAutoBackup;
         private System.Windows.Forms.Panel PnlADSettings;
-        private System.Windows.Forms.ComboBox CmbADTime;
+        private System.Windows.Forms.ComboBox BackupExpiredUnit;
         private System.Windows.Forms.Label LblBackupState;
         private System.Windows.Forms.Button BtnCheckUpdate;
         private System.Windows.Forms.Button BtnSystemLog;
@@ -420,5 +463,7 @@
         private System.Windows.Forms.Button BtnInstructions;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.NumericUpDown BackupExpiredNumericUpDown;
+        private System.Windows.Forms.NumericUpDown BackupCycleNumericUpDown;
     }
 }
