@@ -40,14 +40,6 @@ namespace AutoBackup.Model
         }
 
         /// <summary>
-        /// 设置窗体关闭前提示
-        /// </summary>
-        private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// 选择备份的保存目录
         /// </summary>
         private void BtnOptRootDir_Click(object sender, EventArgs e)
@@ -59,7 +51,10 @@ namespace AutoBackup.Model
             }
         }
 
-        private void SettingForm_FormClosing_1(object sender, FormClosingEventArgs e)
+        /// <summary>
+        /// 设置窗体关闭前保存设置
+        /// </summary>
+        private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Local.Config.SaveConfig();
         }
