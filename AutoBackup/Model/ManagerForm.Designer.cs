@@ -60,6 +60,8 @@
             this.AddFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DelRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ZipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.CmsMouseRightList.SuspendLayout();
@@ -208,7 +210,8 @@
             this.path,
             this.size,
             this.lastTime,
-            this.backupPath});
+            this.backupPath,
+            this.compress});
             this.backupList.ContextMenuStrip = this.CmsMouseRightList;
             this.backupList.FullRowSelect = true;
             this.backupList.GridLines = true;
@@ -260,9 +263,10 @@
             this.AddFilesToolStripMenuItem,
             this.AddFoldersToolStripMenuItem,
             this.DelRowsToolStripMenuItem,
+            this.ZipToolStripMenuItem,
             this.AttributeToolStripMenuItem});
             this.CmsMouseRightList.Name = "CmsMouseRightList";
-            this.CmsMouseRightList.Size = new System.Drawing.Size(137, 92);
+            this.CmsMouseRightList.Size = new System.Drawing.Size(137, 114);
             // 
             // AddFilesToolStripMenuItem
             // 
@@ -286,7 +290,18 @@
             // 
             this.AttributeToolStripMenuItem.Name = "AttributeToolStripMenuItem";
             this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.AttributeToolStripMenuItem.Text = "属性";
+            this.AttributeToolStripMenuItem.Text = "项目属性";
+            // 
+            // compress
+            // 
+            this.compress.Text = "是否压缩";
+            this.compress.Width = 100;
+            // 
+            // ZipToolStripMenuItem
+            // 
+            this.ZipToolStripMenuItem.Name = "ZipToolStripMenuItem";
+            this.ZipToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.ZipToolStripMenuItem.Text = "压缩备份";
             // 
             // ManagerForm
             // 
@@ -336,5 +351,7 @@
         private System.Windows.Forms.ToolStripMenuItem AddFoldersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DelRowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AttributeToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader compress;
+        private System.Windows.Forms.ToolStripMenuItem ZipToolStripMenuItem;
     }
 }

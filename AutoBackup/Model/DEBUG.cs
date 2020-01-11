@@ -24,7 +24,9 @@ namespace AutoBackup.Model
 
         public static DEBUG Instance = null;
 
-
+        /// <summary>
+        /// 显示调试窗口
+        /// </summary>
         internal void ShowForm()
         {
             Invoke(new Action(() =>
