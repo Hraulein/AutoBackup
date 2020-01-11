@@ -233,7 +233,7 @@
             this.ChkAutoBackup.Name = "ChkAutoBackup";
             this.ChkAutoBackup.Size = new System.Drawing.Size(99, 21);
             this.ChkAutoBackup.TabIndex = 0;
-            this.ChkAutoBackup.Text = "启用自动备份";
+            this.ChkAutoBackup.Text = "自动备份周期";
             this.ChkAutoBackup.UseVisualStyleBackColor = true;
             this.ChkAutoBackup.CheckedChanged += new System.EventHandler(this.ChkAutoBackup_CheckedChanged);
             // 
