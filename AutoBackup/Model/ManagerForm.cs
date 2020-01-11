@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static AutoBackup.POJO.BackupItem;
 
 namespace AutoBackup
 {
@@ -102,7 +103,7 @@ namespace AutoBackup
             {
                 POJO.BackupItem fileItem = new POJO.BackupItem
                 {
-                    BackupTaskType = POJO.EnumExtensions.BackupTaskType.File,
+                    BackupTaskType = BackupTaskTypeEnum.File,
                     BackupSourcePath = openFileDialog1.FileName,
                     Size = Utils.Public.GetFileLength(openFileDialog1.FileName),
                     LastBackupTime = null,
@@ -127,7 +128,7 @@ namespace AutoBackup
             {
                 POJO.BackupItem folderItem = new POJO.BackupItem
                 {
-                    BackupTaskType = POJO.EnumExtensions.BackupTaskType.Folder,
+                    BackupTaskType = BackupTaskTypeEnum.Folder,
                     BackupSourcePath = folderBrowserDialog1.SelectedPath,
                     Size = Utils.Public.GetFolderLength(folderBrowserDialog1.SelectedPath),
                     LastBackupTime = null,
