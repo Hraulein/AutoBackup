@@ -66,7 +66,7 @@ namespace AutoBackup.Local
     static class Config
     {
         /* 配置的实体类 */
-        private readonly static POJO.Config _config = new Func<POJO.Config>(() =>
+        public readonly static POJO.Config ConfigInstance = new Func<POJO.Config>(() =>
         {
             try
             {
@@ -84,7 +84,16 @@ namespace AutoBackup.Local
             }
         })();
 
-        public static string GlobalPath { get { return _config.GlobalPath; } set { _config.GlobalPath = value; } }
+        public static void SaveConfig()
+        {
+            using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
+            {
+                streamWriter.Write(JsonSerializer.Serialize(ConfigInstance, new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                }));
+            }
+        }
 
     }
 }

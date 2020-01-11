@@ -49,5 +49,10 @@ namespace AutoBackup.Model
         {
             textBox1.AppendText($"[{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")}][{sourceFilePath},{memberName},{sourceLineNumber}] {msg}{Environment.NewLine}");
         }
+
+        private void 测试按钮1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Log(Local.Config.ConfigInstance.GlobalBackupSettings.Path);
+        }
     }
 }

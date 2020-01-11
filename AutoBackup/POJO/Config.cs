@@ -1,18 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace AutoBackup.POJO
 {
+    
+
+
     class Config
     {
-        [JsonPropertyName("GlobalPath")]
-        public string GlobalPath { get; set; }
+        public class BackupSettings
+        {
+            [JsonPropertyName("Path")]
+            public string Path { get; set; }
 
+            [JsonPropertyName("Enable")]
+            public bool Enable { get; set; }
+
+            [JsonConverter(typeof(JsonStringEnumConverter))]
+            [JsonPropertyName("BackupType")]
+            public EnumExtensions.BackupType BackupType { get; set; }
+
+        }
+
+
+        public Config()
+        {
+            BackupItemsList = new List<BackupItem>();
+        }
+
+
+        [JsonPropertyName("GlobalSettingsBackup")]
+        public BackupSettings GlobalBackupSettings { get; set; }
+
+        [JsonPropertyName("BackupList")]
+        public List<BackupItem> BackupItemsList { get; set; }
     }
 }
 
