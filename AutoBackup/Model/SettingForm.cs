@@ -19,6 +19,7 @@ namespace AutoBackup.Model
         /// <summary>
         /// 备份的设置(读取及修改)
         /// </summary>
+
         POJO.Config.BackupSettings settings = new POJO.Config.BackupSettings();
 
 
@@ -65,39 +66,7 @@ namespace AutoBackup.Model
         /// </summary>
         private void SettingForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            settings.Path = TxtShowRootDir.Text;
-            if (ChkAutoBackup.Checked)
-            {
-                if (CmbABTime.SelectedIndex == -1)
-                {
-                    MessageBox.Show("你勾选了自动备份, 请选择备份间隔");
-                    CmbABTime.Focus();
-                    e.Cancel = true;
-                }
-                else if (!ChkAllBackup.Checked && !ChkIncBackup.Checked)
-                {
-                    MessageBox.Show("你勾选了自动备份, 请至少选择一种备份类型");
-                    ChkAllBackup.Focus();
-                    e.Cancel = true;
-                }
-                else
-                {
-                    settings.Enable = true;
-                    if (ChkAllBackup.Checked)
-                        settings.BackupType = POJO.EnumExtensions.BackupType.FullVolume;
-                    if (ChkIncBackup.Checked)
-                        settings.BackupType = POJO.EnumExtensions.BackupType.Increment;
-                    if (ChkAllBackup.Checked && ChkIncBackup.Checked)
-                        settings.BackupType = POJO.EnumExtensions.BackupType.AllType;
-                    Local.Config.SaveConfig();
-                    e.Cancel = false;
-                }
-            }
-            else
-            {
-                settings.Enable = false;
-                Local.Config.SaveConfig();
-            }
+
         }
     }
 }

@@ -113,7 +113,7 @@ namespace AutoBackup.Local
                 streamWriter.Write(JsonSerializer.Serialize(ConfigInstance, new JsonSerializerOptions
                 {
                     WriteIndented = true
-                }));
+                }).Replace("\\","\\\\"));
             }
         }
     }

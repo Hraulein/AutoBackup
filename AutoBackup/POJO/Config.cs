@@ -4,9 +4,6 @@ using System.Text.Json.Serialization;
 
 namespace AutoBackup.POJO
 {
-
-
-
     class Config
     {
         public class BackupSettings
@@ -34,7 +31,7 @@ namespace AutoBackup.POJO
             /// 自动备份的周期
             /// </summary>
             [JsonPropertyName("BackupTime")]
-            public int BackupTime { get; set; }
+            public int? BackupTime { get; set; }
 
             /// <summary>
             /// 备份类型(全量/增量)
