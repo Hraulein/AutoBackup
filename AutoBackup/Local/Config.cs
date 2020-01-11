@@ -12,7 +12,10 @@ namespace AutoBackup.Local
 {
     static class FilePath
     {
-        /* 创建文件夹 */
+        /// <summary>
+        /// 创建文件夹
+        /// </summary>
+        /// <param name="path">文件夹路径</param>
         private static string CreateDirectoryIfNotExists(string path)
         {
             var directory = new DirectoryInfo(path);
@@ -23,7 +26,10 @@ namespace AutoBackup.Local
             return path;
         }
 
-        /* 创建文件 */
+        /// <summary>
+        /// 创建文件
+        /// </summary>
+        /// <param name="path">文件路径</param>
         private static string CreateFileIfNotExists(string path)
         {
             var file = new FileInfo(path);
@@ -34,31 +40,41 @@ namespace AutoBackup.Local
             return path;
         }
 
-        /* 程序数据根目录文件夹 */
+        /// <summary>
+        /// 程序数据根目录文件夹
+        /// </summary>
         private readonly static string AutoBackupRootDirPath = new Func<string>(() =>
         {
             return CreateDirectoryIfNotExists(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\SK-Studio\AutoBackup");
         })();
 
-        /* 程序配置文件根目录文件夹 */
+        /// <summary>
+        /// 程序配置文件根目录文件夹
+        /// </summary>
         private readonly static string ConfigFileRootPath = new Func<string>(() =>
         {
             return CreateDirectoryIfNotExists(AutoBackupRootDirPath + @"\Config");
         })();
 
-        /* 程序日志文件根目录文件夹 */
+        /// <summary>
+        /// 程序日志文件根目录文件夹
+        /// </summary>
         private readonly static string LogFileRootPath = new Func<string>(() =>
         {
             return CreateDirectoryIfNotExists(AutoBackupRootDirPath + @"\Log");
         })();
 
-        /* 程序配置文件路径 */
+        /// <summary>
+        /// 程序配置文件路径
+        /// </summary>
         public readonly static string SystemConfigFilePath = new Func<string>(() =>
         {
             return CreateFileIfNotExists(ConfigFileRootPath + @"\config.json");
         })();
 
-        /* 程序日志文件路径 */
+        /// <summary>
+        /// 程序日志文件路径
+        /// </summary>
         public static string LogFilePath = new Func<string>(() =>
         {
             return CreateFileIfNotExists(LogFileRootPath + $"\\{DateTime.Now.ToString("yyyy-MM-dd")}.log");
@@ -66,7 +82,9 @@ namespace AutoBackup.Local
     }
     static class Config
     {
-        /* 配置的实体类 */
+        /// <summary>
+        /// 配置的实体类
+        /// </summary>
         public readonly static POJO.Config ConfigInstance = new Func<POJO.Config>(() =>
         {
             try
@@ -85,7 +103,9 @@ namespace AutoBackup.Local
             }
         })();
 
-        /* 保存配置到文件 */
+        /// <summary>
+        /// 保存配置到文件
+        /// </summary>
         public static void SaveConfig()
         {
             using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
@@ -96,6 +116,5 @@ namespace AutoBackup.Local
                 }));
             }
         }
-
     }
 }

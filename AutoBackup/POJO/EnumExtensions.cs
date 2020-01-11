@@ -6,10 +6,21 @@ namespace AutoBackup.POJO
     {
         public enum BackupType
         {
+            /// <summary>
+            /// 全量备份
+            /// </summary>
             [Description("全量")]
             FullVolume,
+            /// <summary>
+            /// 增量备份
+            /// </summary>
             [Description("增量")]
-            Increment
+            Increment,
+            /// <summary>
+            /// 我全都要
+            /// </summary>
+            [Description("两者都要")]
+            AllType
         }
         public enum BackupTaskType
         {

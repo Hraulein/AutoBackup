@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace AutoBackup.POJO
 {
-    
+
 
 
     class Config
@@ -18,20 +18,34 @@ namespace AutoBackup.POJO
                 ExpiredTime = null;
             }
 
-            /* 备份路径 */
+            /// <summary>
+            /// 备份路径
+            /// </summary>
             [JsonPropertyName("Path")]
             public string Path { get; set; }
 
-            /* 启用备份 */
+            /// <summary>
+            /// 启用自动备份
+            /// </summary>
             [JsonPropertyName("Enable")]
             public bool Enable { get; set; }
 
-            /* 备份类型(全量/增量) */
+            /// <summary>
+            /// 自动备份的周期
+            /// </summary>
+            [JsonPropertyName("BackupTime")]
+            public int BackupTime { get; set; }
+
+            /// <summary>
+            /// 备份类型(全量/增量)
+            /// </summary>
             [JsonConverter(typeof(JsonStringEnumConverter))]
             [JsonPropertyName("BackupType")]
             public EnumExtensions.BackupType BackupType { get; set; }
 
-            /* 过期时间,无限制请使用null */
+            /// <summary>
+            /// 过期时间, 无限制请使用null
+            /// </summary>
             [JsonPropertyName("ExpiredTime")]
             public DateTime? ExpiredTime { get; set; }
 
@@ -44,11 +58,15 @@ namespace AutoBackup.POJO
             BackupItemsList = new List<BackupItem>();
         }
 
-        /* 全局备份设置 */
+        /// <summary>
+        /// 全局备份设置
+        /// </summary>
         [JsonPropertyName("GlobalSettingsBackup")]
         public BackupSettings GlobalBackupSettings { get; set; }
 
-        /* 备份任务列表 */
+        /// <summary>
+        /// 备份任务列表
+        /// </summary>
         [JsonPropertyName("BackupList")]
         public List<BackupItem> BackupItemsList { get; set; }
     }

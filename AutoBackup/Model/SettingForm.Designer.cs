@@ -375,6 +375,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设置";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingForm_FormClosing);
+            this.Load += new System.EventHandler(this.SettingForm_Load);
             this.GrpWinService.ResumeLayout(false);
             this.GrpBackupSettings.ResumeLayout(false);
             this.GrpBackupSettings.PerformLayout();
