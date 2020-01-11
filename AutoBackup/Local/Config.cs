@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 
 namespace AutoBackup.Local
 {
@@ -79,11 +80,12 @@ namespace AutoBackup.Local
             }
             catch (JsonException e)
             {
-                Model.DEBUG.Instance.Log(e.ToString());
+                Debug.WriteLine(e.ToString());
                 return new POJO.Config();
             }
         })();
 
+        /* 保存配置到文件 */
         public static void SaveConfig()
         {
             using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
