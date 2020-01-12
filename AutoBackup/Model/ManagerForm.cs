@@ -76,8 +76,8 @@ namespace AutoBackup
                 new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSourcePath), // 备份的源路径
                 new ListViewItem.ListViewSubItem(listItem, itemState ? FileUtils.GetSizeString(Convert.ToInt64(backupItem.Size)) : isFileOrFolder ? "文件不存在" : "文件夹不存在"),
                 new ListViewItem.ListViewSubItem(listItem, backupItem.LastBackupTime?.ToString() ?? "从未备份"), // 上次备份时间
-                //new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSettings?.Path ?? Local.Config.ConfigInstance.GlobalBackupSettings.Path), // 备份路径的单独设置(默认全局)
-                new ListViewItem.ListViewSubItem(listItem, string.IsNullOrEmpty(backupItem.BackupSettings.Path) ? "跟随设置" : backupItem.BackupSettings.Path),
+                //new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSettings?.Path ?? "跟随设置"), // 备份路径的单独设置(默认全局)
+                new ListViewItem.ListViewSubItem(listItem, string.IsNullOrEmpty(backupItem.BackupSettings?.Path) ? "跟随设置" : backupItem.BackupSettings.Path),
                 new ListViewItem.ListViewSubItem(listItem, "Undefined") // 是否压缩备份
             });
             listItem.BackColor = itemState ? Color.FromArgb(255, 255, 255) : Color.FromArgb(255, 192, 192);
@@ -196,6 +196,15 @@ namespace AutoBackup
         private void BtnDelRows_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void BtnCheckState_Click(object sender, EventArgs e)
+        {
+            BackupList.Items.Clear();
+            foreach (var item in Local.Config.ConfigInstance.BackupItemsList)
+            {
+                BackupList.Items.Add(ConvertBackupItemsToListViewItem(item));
+            }
         }
     }
 }

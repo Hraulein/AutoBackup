@@ -129,6 +129,7 @@
             this.BtnCheckState.TabIndex = 4;
             this.BtnCheckState.Text = "检查列表状态";
             this.BtnCheckState.UseVisualStyleBackColor = true;
+            this.BtnCheckState.Click += new System.EventHandler(this.BtnCheckState_Click);
             // 
             // BtnOpenRootDir
             // 
