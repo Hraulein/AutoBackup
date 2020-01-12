@@ -10,7 +10,7 @@ namespace AutoBackup.Utils
     class Public
     {
         /// <summary>
-        /// 获取文件大小（bit）
+        /// 获取文件大小（字节）
         /// </summary>
         /// <param name="path">文件路径</param>
         /// <returns></returns>
@@ -20,13 +20,13 @@ namespace AutoBackup.Utils
             {
                 FileInfo info = new FileInfo(filepath);
                 long filesize = info.Length;
-                return filesize; //返回bit大小
+                return filesize ; //返回大小
             }
             else
                 return null;
         }
         /// <summary>
-        /// 获取文件夹大小
+        /// 获取文件夹大小(字节)
         /// </summary>
         /// <param name="dirPath">文件夹目录</param>
         /// <returns></returns>
@@ -53,7 +53,7 @@ namespace AutoBackup.Utils
                             len += GetFolderLength(dis[i].FullName);
                         }
                     }
-                    return len; //返回byte
+                    return len ; //返回
                 }
                 catch
                 {

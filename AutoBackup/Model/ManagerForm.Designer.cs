@@ -29,66 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件",
-            "√",
-            "C:\\test.txt",
-            "2 KB",
-            "null",
-            "跟随设置",
-            "否"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件夹",
-            "√",
-            "C:\\test",
-            "23,580 KB",
-            "2019/11/11 11:11",
-            "跟随设置",
-            "否"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件",
-            "×",
-            "C:\\test.md",
-            "null",
-            "文件不存在",
-            "跟随设置",
-            "否"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192))))), null);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件",
-            "√",
-            "D:\\test.doc",
-            "200 KB",
-            "2019/08/09 08:08",
-            "E:\\AutoBackup",
-            "否"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件夹",
-            "×",
-            "C:\\Test1",
-            "null",
-            "文件夹不存在",
-            "跟随设置",
-            "否"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192))))), null);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件夹",
-            "√",
-            "D:\\小视频",
-            "28,238,796 KB",
-            "null",
-            "F:\\Videos",
-            "是"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
-            "文件夹",
-            "×",
-            "D:\\苍老师",
-            "null",
-            "文件夹不存在",
-            "F:\\Movies",
-            "否"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192))))), null);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
-            "以上均是手动",
-            "添加",
-            "的测试显示数据"}, -1, System.Drawing.Color.Empty, System.Drawing.Color.White, null);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.BtnSettings = new System.Windows.Forms.Button();
             this.BtnIncBackup = new System.Windows.Forms.Button();
@@ -113,10 +53,10 @@
             this.AddFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AddFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DelRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ZipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.CmsMouseRightList.SuspendLayout();
@@ -207,6 +147,7 @@
             this.BtnDelRows.TabIndex = 2;
             this.BtnDelRows.Text = "删除列表项目";
             this.BtnDelRows.UseVisualStyleBackColor = true;
+            this.BtnDelRows.Click += new System.EventHandler(this.BtnDelRows_Click);
             // 
             // BtnAddFolders
             // 
@@ -277,19 +218,11 @@
             this.BackupList.FullRowSelect = true;
             this.BackupList.GridLines = true;
             this.BackupList.HideSelection = false;
-            this.BackupList.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4,
-            listViewItem5,
-            listViewItem6,
-            listViewItem7,
-            listViewItem8});
             this.BackupList.Location = new System.Drawing.Point(6, 17);
             this.BackupList.Name = "BackupList";
             this.BackupList.ShowItemToolTips = true;
             this.BackupList.Size = new System.Drawing.Size(783, 580);
+            this.BackupList.SmallImageList = this.imageList1;
             this.BackupList.TabIndex = 8;
             this.BackupList.TabStop = false;
             this.BackupList.Tag = "";
@@ -313,7 +246,7 @@
             // path
             // 
             this.path.Text = "路径";
-            this.path.Width = 100;
+            this.path.Width = 222;
             // 
             // size
             // 
@@ -341,49 +274,48 @@
             this.AddFilesToolStripMenuItem,
             this.AddFoldersToolStripMenuItem,
             this.DelRowsToolStripMenuItem,
-            this.ZipToolStripMenuItem,
             this.AttributeToolStripMenuItem});
             this.CmsMouseRightList.Name = "CmsMouseRightList";
-            this.CmsMouseRightList.Size = new System.Drawing.Size(137, 114);
+            this.CmsMouseRightList.Size = new System.Drawing.Size(152, 92);
+            this.CmsMouseRightList.Opened += new System.EventHandler(this.CmsMouseRightList_Opened);
             // 
             // AddFilesToolStripMenuItem
             // 
             this.AddFilesToolStripMenuItem.Name = "AddFilesToolStripMenuItem";
-            this.AddFilesToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.AddFilesToolStripMenuItem.Text = "添加文件";
+            this.AddFilesToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.AddFilesToolStripMenuItem.Text = "添加文件(&E)";
             this.AddFilesToolStripMenuItem.Click += new System.EventHandler(this.AddFilesToolStripMenuItem_Click);
             // 
             // AddFoldersToolStripMenuItem
             // 
             this.AddFoldersToolStripMenuItem.Name = "AddFoldersToolStripMenuItem";
-            this.AddFoldersToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.AddFoldersToolStripMenuItem.Text = "添加文件夹";
+            this.AddFoldersToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.AddFoldersToolStripMenuItem.Text = "添加文件夹(&T)";
             this.AddFoldersToolStripMenuItem.Click += new System.EventHandler(this.AddFoldersToolStripMenuItem_Click);
             // 
             // DelRowsToolStripMenuItem
             // 
             this.DelRowsToolStripMenuItem.Name = "DelRowsToolStripMenuItem";
-            this.DelRowsToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.DelRowsToolStripMenuItem.Text = "删除项目";
+            this.DelRowsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.DelRowsToolStripMenuItem.Text = "删除项目(&D)";
             this.DelRowsToolStripMenuItem.Click += new System.EventHandler(this.DelRowsToolStripMenuItem_Click);
-            // 
-            // ZipToolStripMenuItem
-            // 
-            this.ZipToolStripMenuItem.Name = "ZipToolStripMenuItem";
-            this.ZipToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.ZipToolStripMenuItem.Text = "压缩备份";
-            this.ZipToolStripMenuItem.Click += new System.EventHandler(this.ZipToolStripMenuItem_Click);
             // 
             // AttributeToolStripMenuItem
             // 
             this.AttributeToolStripMenuItem.Name = "AttributeToolStripMenuItem";
-            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.AttributeToolStripMenuItem.Text = "属性(&P)";
             this.AttributeToolStripMenuItem.Click += new System.EventHandler(this.AttributeToolStripMenuItem_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // ManagerForm
             // 
@@ -432,8 +364,8 @@
         private System.Windows.Forms.ToolStripMenuItem DelRowsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AttributeToolStripMenuItem;
         private System.Windows.Forms.ColumnHeader compress;
-        private System.Windows.Forms.ToolStripMenuItem ZipToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

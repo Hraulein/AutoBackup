@@ -8,8 +8,14 @@ namespace AutoBackup.POJO
     {
         public enum BackupTaskTypeEnum
         {
+            /// <summary>
+            /// 类型: 文件夹
+            /// </summary>
             [Description("文件夹")]
             Folder = 0,
+            /// <summary>
+            /// 类型: 文件
+            /// </summary>
             [Description("文件")]
             File = 1,
         }

@@ -147,10 +147,8 @@ namespace AutoBackup.Model
             }
             else
             {
-                ChkAutoBackup.Checked = false;
+                ChkAutoBackup.Checked = FullRadioButton.Checked = IncRadioButton.Checked = false;
                 BackupCycleUnit.SelectedIndex = -1;
-                FullRadioButton.Checked = false;
-                IncRadioButton.Checked = false;
             }
             /* 备份有效期 */
             if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime == null)

@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static AutoBackup.POJO.BackupItem;
+using AutoBackup.Utils;
 
 namespace AutoBackup
 {
@@ -37,11 +38,11 @@ namespace AutoBackup
             {
                 BackupList.Items.Add(ConvertBackupItemsToListViewItem(item));
             }
-            Utils.ElevatedDragDropManager.Instance.EnableDragDrop(BackupList.Handle);
-            Utils.ElevatedDragDropManager.Instance.ElevatedDragDrop += BackupList_DragDrop;
+            ElevatedDragDropManager.Instance.EnableDragDrop(BackupList.Handle);
+            ElevatedDragDropManager.Instance.ElevatedDragDrop += BackupList_DragDrop;
         }
 
-        private void BackupList_DragDrop(object sender, Utils.ElevatedDragDropArgs e)
+        private void BackupList_DragDrop(object sender, ElevatedDragDropArgs e)
         {
             if (e.HWnd == BackupList.Handle)
             {
@@ -50,26 +51,36 @@ namespace AutoBackup
         }
 
         /// <summary>
-        /// 转换备份列表文件内容到listview
+        /// 转换备份列表文件内容到listview (个性化显示数据到用户界面)
         /// </summary>
         /// <param name="backupItem"></param>
-        /// <returns></returns>
         private ListViewItem ConvertBackupItemsToListViewItem(POJO.BackupItem backupItem)
         {
+            /* 添加图标到ImageList */
+            imageList1.Images.Add("@Folder", SystemIcon.GetDirectoryIcon(false));
+            imageList1.Images.Add(backupItem.BackupSourcePath, SystemIcon.GetIcon(backupItem.BackupSourcePath, false));
+            /* 判断是否为文件 */
+            var isFileOrFolder = backupItem.BackupTaskType == BackupTaskTypeEnum.File;
+            /* 判断原有项目的路径是否存在 */
+            var itemState = isFileOrFolder ? File.Exists(backupItem.BackupSourcePath) : Directory.Exists(backupItem.BackupSourcePath);
             var listItem = new ListViewItem
             {
-                Tag = backupItem
+                Tag = backupItem,
+                Text = isFileOrFolder ? SystemExtName.GetFileExtTypeName(backupItem.BackupSourcePath) : "文件夹",
+                ImageKey = isFileOrFolder ? backupItem.BackupSourcePath : "@Folder"
             };
+
             listItem.SubItems.AddRange(new ListViewItem.ListViewSubItem[]
             {
-                    new ListViewItem.ListViewSubItem(listItem,backupItem.BackupTaskType.ToDescriptionString()),
-                    new ListViewItem.ListViewSubItem(listItem,"√"),
-                    new ListViewItem.ListViewSubItem(listItem,backupItem.BackupSourcePath),
-                    new ListViewItem.ListViewSubItem(listItem,backupItem.Size?.ToString()??"0"),
-                    new ListViewItem.ListViewSubItem(listItem,backupItem.LastBackupTime?.ToString() ?? ""),
-                    new ListViewItem.ListViewSubItem(listItem,backupItem.BackupSettings?.Path??Local.Config.ConfigInstance.GlobalBackupSettings.Path),
-                    new ListViewItem.ListViewSubItem(listItem,"是")
+                new ListViewItem.ListViewSubItem(listItem, itemState ? "√": "×"), // 备份的任务状态
+                new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSourcePath), // 备份的源路径
+                new ListViewItem.ListViewSubItem(listItem, itemState ? FileUtils.GetSizeString(Convert.ToInt64(backupItem.Size)) : isFileOrFolder ? "文件不存在" : "文件夹不存在"),
+                new ListViewItem.ListViewSubItem(listItem, backupItem.LastBackupTime?.ToString() ?? "从未备份"), // 上次备份时间
+                //new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSettings?.Path ?? Local.Config.ConfigInstance.GlobalBackupSettings.Path), // 备份路径的单独设置(默认全局)
+                new ListViewItem.ListViewSubItem(listItem, string.IsNullOrEmpty(backupItem.BackupSettings.Path) ? "跟随设置" : backupItem.BackupSettings.Path),
+                new ListViewItem.ListViewSubItem(listItem, "Undefined") // 是否压缩备份
             });
+            listItem.BackColor = itemState ? Color.FromArgb(255, 255, 255) : Color.FromArgb(255, 192, 192);
             return listItem;
         }
 
@@ -101,20 +112,21 @@ namespace AutoBackup
             openFileDialog1.Multiselect = true;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                POJO.BackupItem fileItem = new POJO.BackupItem
+                int count = openFileDialog1.FileNames.Length;
+                for (int i = 0; i < count; i++)
                 {
-                    BackupTaskType = BackupTaskTypeEnum.File,
-                    BackupSourcePath = openFileDialog1.FileName,
-                    Size = Utils.Public.GetFileLength(openFileDialog1.FileName),
-                    LastBackupTime = null,
-                    BackupSettings = null
-                };
-                ConvertBackupItemsToListViewItem(fileItem);
-                Local.Config.ConfigInstance.BackupItemsList.Add(fileItem);
-            }
-            else
-            {
-                MessageBox.Show("You cancel add file");
+                    POJO.BackupItem fileItem = new POJO.BackupItem
+                    {
+                        BackupTaskType = BackupTaskTypeEnum.File,  // 类型
+                        BackupSourcePath = openFileDialog1.FileNames[i], // 路径
+                        Size = Public.GetFileLength(openFileDialog1.FileNames[i]), // 大小
+                        LastBackupTime = null, // 上次备份时间
+                        BackupSettings = null // 备份设置
+                    };
+                    Local.Config.ConfigInstance.BackupItemsList.Add(fileItem);
+                    BackupList.Items.Add(ConvertBackupItemsToListViewItem(fileItem));
+                }
+                Local.Config.SaveConfig();
             }
         }
         /// <summary>
@@ -130,16 +142,13 @@ namespace AutoBackup
                 {
                     BackupTaskType = BackupTaskTypeEnum.Folder,
                     BackupSourcePath = folderBrowserDialog1.SelectedPath,
-                    Size = Utils.Public.GetFolderLength(folderBrowserDialog1.SelectedPath),
+                    Size = Public.GetFolderLength(folderBrowserDialog1.SelectedPath),
                     LastBackupTime = null,
                     BackupSettings = null
                 };
-                ConvertBackupItemsToListViewItem(folderItem);
                 Local.Config.ConfigInstance.BackupItemsList.Add(folderItem);
-            }
-            else
-            {
-                MessageBox.Show("You cancel add folder");
+                BackupList.Items.Add(ConvertBackupItemsToListViewItem(folderItem));
+                Local.Config.SaveConfig();
             }
         }
 
@@ -164,14 +173,7 @@ namespace AutoBackup
         /// </summary>
         private void DelRowsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-        }
-        /// <summary>
-        /// 是否压缩
-        /// </summary>
-        private void ZipToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            BtnDelRows_Click(sender, e);
         }
         /// <summary>
         /// 属性
@@ -182,5 +184,18 @@ namespace AutoBackup
         }
 
         #endregion
+
+        /// <summary>
+        /// 右键菜单的一些限制
+        /// </summary>
+        private void CmsMouseRightList_Opened(object sender, EventArgs e)
+        {
+            DelRowsToolStripMenuItem.Visible = AttributeToolStripMenuItem.Visible = BackupList.SelectedItems.Count != 0;
+        }
+
+        private void BtnDelRows_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
