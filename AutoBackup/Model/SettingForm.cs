@@ -143,14 +143,14 @@ namespace AutoBackup.Model
                 ChkAutoBackup.Checked = true;
                 /* 获取备份周期,如果为空则使用默认值Day.GetMinutes(1) */
                 BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime ?? BackupTimeUnitEnum.Day.GetMinutes(1);
-                _ = Local.Config.ConfigInstance.GlobalBackupSettings.BackupType == BackupTypeEnum.FullVolume ? ChkAllBackup.Checked = true : ChkIncBackup.Checked = true;
+                _ = Local.Config.ConfigInstance.GlobalBackupSettings.BackupType == BackupTypeEnum.FullVolume ? FullRadioButton.Checked = true : IncRadioButton.Checked = true;
             }
             else
             {
                 ChkAutoBackup.Checked = false;
                 BackupCycleUnit.SelectedIndex = -1;
-                ChkAllBackup.Checked = false;
-                ChkIncBackup.Checked = false;
+                FullRadioButton.Checked = false;
+                IncRadioButton.Checked = false;
             }
             /* 备份有效期 */
             if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime == null)
@@ -225,6 +225,11 @@ namespace AutoBackup.Model
                 return;
             }
             Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = BackupTypeEnum.Increment;
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

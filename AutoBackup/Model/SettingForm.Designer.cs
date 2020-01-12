@@ -35,11 +35,11 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.LblBackupState = new System.Windows.Forms.Label();
             this.PnlADSettings = new System.Windows.Forms.Panel();
+            this.BackupExpiredNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.BackupExpiredUnit = new System.Windows.Forms.ComboBox();
             this.PnlABSettings = new System.Windows.Forms.Panel();
+            this.BackupCycleNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.BackupCycleUnit = new System.Windows.Forms.ComboBox();
-            this.ChkIncBackup = new System.Windows.Forms.CheckBox();
-            this.ChkAllBackup = new System.Windows.Forms.CheckBox();
             this.ChkAutoDelete = new System.Windows.Forms.CheckBox();
             this.ChkAutoBackup = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -55,16 +55,16 @@
             this.BtnInstructions = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.BackupCycleNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.BackupExpiredNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.FullRadioButton = new System.Windows.Forms.RadioButton();
+            this.IncRadioButton = new System.Windows.Forms.RadioButton();
             this.GrpWinService.SuspendLayout();
             this.GrpBackupSettings.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.PnlADSettings.SuspendLayout();
-            this.PnlABSettings.SuspendLayout();
-            this.GrpOthers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BackupExpiredNumericUpDown)).BeginInit();
+            this.PnlABSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).BeginInit();
+            this.GrpOthers.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnInstallService
@@ -148,6 +148,29 @@
             this.PnlADSettings.TabIndex = 0;
             this.PnlADSettings.Visible = false;
             // 
+            // BackupExpiredNumericUpDown
+            // 
+            this.BackupExpiredNumericUpDown.Location = new System.Drawing.Point(9, 9);
+            this.BackupExpiredNumericUpDown.Maximum = new decimal(new int[] {
+            876000,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.Name = "BackupExpiredNumericUpDown";
+            this.BackupExpiredNumericUpDown.Size = new System.Drawing.Size(80, 23);
+            this.BackupExpiredNumericUpDown.TabIndex = 2;
+            this.BackupExpiredNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupExpiredNumericUpDown.ValueChanged += new System.EventHandler(this.BackupExpiredNumericUpDown_ValueChanged);
+            // 
             // BackupExpiredUnit
             // 
             this.BackupExpiredUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -167,15 +190,38 @@
             // 
             // PnlABSettings
             // 
+            this.PnlABSettings.Controls.Add(this.IncRadioButton);
             this.PnlABSettings.Controls.Add(this.BackupCycleNumericUpDown);
+            this.PnlABSettings.Controls.Add(this.FullRadioButton);
             this.PnlABSettings.Controls.Add(this.BackupCycleUnit);
-            this.PnlABSettings.Controls.Add(this.ChkIncBackup);
-            this.PnlABSettings.Controls.Add(this.ChkAllBackup);
             this.PnlABSettings.Location = new System.Drawing.Point(108, 12);
             this.PnlABSettings.Name = "PnlABSettings";
             this.PnlABSettings.Size = new System.Drawing.Size(340, 36);
             this.PnlABSettings.TabIndex = 5;
             this.PnlABSettings.Visible = false;
+            // 
+            // BackupCycleNumericUpDown
+            // 
+            this.BackupCycleNumericUpDown.Location = new System.Drawing.Point(9, 6);
+            this.BackupCycleNumericUpDown.Maximum = new decimal(new int[] {
+            876000,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.Name = "BackupCycleNumericUpDown";
+            this.BackupCycleNumericUpDown.Size = new System.Drawing.Size(80, 23);
+            this.BackupCycleNumericUpDown.TabIndex = 2;
+            this.BackupCycleNumericUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.BackupCycleNumericUpDown.ValueChanged += new System.EventHandler(this.BackupCycleNumericUpDown_ValueChanged);
             // 
             // BackupCycleUnit
             // 
@@ -187,28 +233,6 @@
             this.BackupCycleUnit.Size = new System.Drawing.Size(95, 24);
             this.BackupCycleUnit.TabIndex = 0;
             this.BackupCycleUnit.SelectedIndexChanged += new System.EventHandler(this.BackupCycleUnit_SelectedIndexChanged);
-            // 
-            // ChkIncBackup
-            // 
-            this.ChkIncBackup.AutoSize = true;
-            this.ChkIncBackup.Location = new System.Drawing.Point(281, 10);
-            this.ChkIncBackup.Name = "ChkIncBackup";
-            this.ChkIncBackup.Size = new System.Drawing.Size(51, 21);
-            this.ChkIncBackup.TabIndex = 3;
-            this.ChkIncBackup.Text = "增量";
-            this.ChkIncBackup.UseVisualStyleBackColor = true;
-            this.ChkIncBackup.CheckedChanged += new System.EventHandler(this.ChkIncBackup_CheckedChanged);
-            // 
-            // ChkAllBackup
-            // 
-            this.ChkAllBackup.AutoSize = true;
-            this.ChkAllBackup.Location = new System.Drawing.Point(217, 10);
-            this.ChkAllBackup.Name = "ChkAllBackup";
-            this.ChkAllBackup.Size = new System.Drawing.Size(51, 21);
-            this.ChkAllBackup.TabIndex = 2;
-            this.ChkAllBackup.Text = "全量";
-            this.ChkAllBackup.UseVisualStyleBackColor = true;
-            this.ChkAllBackup.CheckedChanged += new System.EventHandler(this.ChkAllBackup_CheckedChanged);
             // 
             // ChkAutoDelete
             // 
@@ -352,51 +376,28 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "©COPYRIGHTS SK-STUDIO. ALL RIGHTS RESERVED";
             // 
-            // BackupCycleNumericUpDown
+            // FullRadioButton
             // 
-            this.BackupCycleNumericUpDown.Location = new System.Drawing.Point(9, 6);
-            this.BackupCycleNumericUpDown.Maximum = new decimal(new int[] {
-            876000,
-            0,
-            0,
-            0});
-            this.BackupCycleNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.BackupCycleNumericUpDown.Name = "BackupCycleNumericUpDown";
-            this.BackupCycleNumericUpDown.Size = new System.Drawing.Size(80, 23);
-            this.BackupCycleNumericUpDown.TabIndex = 2;
-            this.BackupCycleNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.BackupCycleNumericUpDown.ValueChanged += new System.EventHandler(this.BackupCycleNumericUpDown_ValueChanged);
+            this.FullRadioButton.AutoSize = true;
+            this.FullRadioButton.Location = new System.Drawing.Point(219, 8);
+            this.FullRadioButton.Name = "FullRadioButton";
+            this.FullRadioButton.Size = new System.Drawing.Size(50, 21);
+            this.FullRadioButton.TabIndex = 3;
+            this.FullRadioButton.TabStop = true;
+            this.FullRadioButton.Text = "全量";
+            this.FullRadioButton.UseVisualStyleBackColor = true;
             // 
-            // BackupExpiredNumericUpDown
+            // IncRadioButton
             // 
-            this.BackupExpiredNumericUpDown.Location = new System.Drawing.Point(9, 9);
-            this.BackupExpiredNumericUpDown.Maximum = new decimal(new int[] {
-            876000,
-            0,
-            0,
-            0});
-            this.BackupExpiredNumericUpDown.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.BackupExpiredNumericUpDown.Name = "BackupExpiredNumericUpDown";
-            this.BackupExpiredNumericUpDown.Size = new System.Drawing.Size(80, 23);
-            this.BackupExpiredNumericUpDown.TabIndex = 2;
-            this.BackupExpiredNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.BackupExpiredNumericUpDown.ValueChanged += new System.EventHandler(this.BackupExpiredNumericUpDown_ValueChanged);
+            this.IncRadioButton.AutoSize = true;
+            this.IncRadioButton.Location = new System.Drawing.Point(281, 8);
+            this.IncRadioButton.Name = "IncRadioButton";
+            this.IncRadioButton.Size = new System.Drawing.Size(50, 21);
+            this.IncRadioButton.TabIndex = 4;
+            this.IncRadioButton.TabStop = true;
+            this.IncRadioButton.Text = "增量";
+            this.IncRadioButton.UseVisualStyleBackColor = true;
+            this.IncRadioButton.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // SettingForm
             // 
@@ -424,12 +425,12 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.PnlADSettings.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.BackupExpiredNumericUpDown)).EndInit();
             this.PnlABSettings.ResumeLayout(false);
             this.PnlABSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).EndInit();
             this.GrpOthers.ResumeLayout(false);
             this.GrpOthers.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BackupCycleNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.BackupExpiredNumericUpDown)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -448,8 +449,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel PnlABSettings;
         private System.Windows.Forms.ComboBox BackupCycleUnit;
-        private System.Windows.Forms.CheckBox ChkIncBackup;
-        private System.Windows.Forms.CheckBox ChkAllBackup;
         private System.Windows.Forms.CheckBox ChkAutoDelete;
         private System.Windows.Forms.CheckBox ChkAutoBackup;
         private System.Windows.Forms.Panel PnlADSettings;
@@ -465,5 +464,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown BackupExpiredNumericUpDown;
         private System.Windows.Forms.NumericUpDown BackupCycleNumericUpDown;
+        private System.Windows.Forms.RadioButton IncRadioButton;
+        private System.Windows.Forms.RadioButton FullRadioButton;
     }
 }
