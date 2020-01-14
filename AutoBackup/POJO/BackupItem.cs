@@ -22,7 +22,7 @@ namespace AutoBackup.POJO
 
         public BackupItem()
         {
-            BackupSettings = new Config.BackupSettings();
+            BackupSettings = new BackupSettings();
             BackupSourcePath = "";
             LastBackupTime = null;
             Size = null;
@@ -32,7 +32,7 @@ namespace AutoBackup.POJO
         /// 备份任务的单独设置, 跟随全局请使用null
         /// </summary>
         [JsonPropertyName("BackupSettings")]
-        public Config.BackupSettings BackupSettings { get; set; }
+        public BackupSettings BackupSettings { get; set; }
 
         /// <summary>
         /// 备份的源路径

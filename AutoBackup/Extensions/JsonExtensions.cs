@@ -11,6 +11,10 @@ namespace AutoBackup
         }
         public static T ToObject<T>(this JsonDocument document)
         {
+            if (document == null)
+            {
+                return default;
+            }
             var json = document.RootElement.GetRawText();
             return JsonSerializer.Deserialize<T>(json);
         }

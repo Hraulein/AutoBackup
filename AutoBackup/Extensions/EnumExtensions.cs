@@ -6,8 +6,14 @@ namespace AutoBackup.Extensions
 {
     public static class EnumExtensions
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:正确实例化参数异常", Justification = "<挂起>")]
         public static string ToDescriptionString(this Enum val)
         {
+            if (val == null)
+            {
+                const string ParamName = "枚举实例不能为null";
+                throw new ArgumentNullException(paramName: ParamName);
+            }
             DescriptionAttribute[] attributes = (DescriptionAttribute[])val
                .GetType()
                .GetField(val.ToString())

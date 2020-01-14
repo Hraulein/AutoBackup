@@ -81,6 +81,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\BackupItemExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Local\Config.cs" />
     <Compile Include="Model\ManagerForm.cs">
@@ -103,6 +104,8 @@
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Utils\Public.cs" />
+    <Compile Include="Utils\SystemExtName.cs" />
+    <Compile Include="Utils\SystemIcon.cs" />
     <EmbeddedResource Include="Model\ManagerForm.resx">
       <DependentUpon>ManagerForm.cs</DependentUpon>
     </EmbeddedResource>

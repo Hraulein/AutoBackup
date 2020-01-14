@@ -7,65 +7,64 @@ using static AutoBackup.Model.SettingForm;
 
 namespace AutoBackup.POJO
 {
-    public class Config
+    public class BackupSettings
     {
-        public class BackupSettings
+        public enum BackupTypeEnum
         {
-            public enum BackupTypeEnum
-            {
-                /// <summary>
-                /// 全量备份
-                /// </summary>
-                [Description("全量")]
-                FullVolume = 0,
-                /// <summary>
-                /// 增量备份
-                /// </summary>
-                [Description("增量")]
-                Increment = 1,
-            }
-            public BackupSettings()
-            {
-                Path = "";
-                Enable = true;
-                BackupTime = null;
-                ExpiredTime = null;
-            }
-
             /// <summary>
-            /// 备份路径
+            /// 全量备份
             /// </summary>
-            [JsonPropertyName("Path")]
-            public string Path { get; set; }
-
+            [Description("全量")]
+            FullVolume = 0,
             /// <summary>
-            /// 启用自动备份
+            /// 增量备份
             /// </summary>
-            [JsonPropertyName("Enable")]
-            public bool Enable { get; set; }
-
-            /// <summary>
-            /// 自动备份的周期(未设置请使用null)
-            /// </summary>
-            [JsonPropertyName("BackupTime")]
-            public int? BackupTime { get; set; }
-
-            /// <summary>
-            /// 备份类型(全量/增量)
-            /// </summary>
-            [JsonConverter(typeof(JsonStringEnumConverter))]
-            [JsonPropertyName("BackupType")]
-            public BackupTypeEnum BackupType { get; set; }
-
-            /// <summary>
-            /// 过期时间, 无限制请使用null
-            /// </summary>
-            [JsonPropertyName("ExpiredTime")]
-            public int? ExpiredTime { get; set; }
-
+            [Description("增量")]
+            Increment = 1,
+        }
+        public BackupSettings()
+        {
+            Path = "";
+            Enable = true;
+            BackupTime = null;
+            ExpiredTime = null;
         }
 
+        /// <summary>
+        /// 备份路径
+        /// </summary>
+        [JsonPropertyName("Path")]
+        public string Path { get; set; }
 
+        /// <summary>
+        /// 启用自动备份
+        /// </summary>
+        [JsonPropertyName("Enable")]
+        public bool Enable { get; set; }
+
+        /// <summary>
+        /// 自动备份的周期(未设置请使用null)
+        /// </summary>
+        [JsonPropertyName("BackupTime")]
+        public int? BackupTime { get; set; }
+
+        /// <summary>
+        /// 备份类型(全量/增量)
+        /// </summary>
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        [JsonPropertyName("BackupType")]
+        public BackupTypeEnum BackupType { get; set; }
+
+        /// <summary>
+        /// 过期时间, 无限制请使用null
+        /// </summary>
+        [JsonPropertyName("ExpiredTime")]
+        public int? ExpiredTime { get; set; }
+
+    }
+    public class Config
+    {
+        
         public Config()
         {
             GlobalBackupSettings = new BackupSettings

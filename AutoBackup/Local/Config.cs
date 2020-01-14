@@ -125,7 +125,12 @@ namespace AutoBackup.Local
                 }
                 return true;
             }
-            catch (Exception e)
+            catch (IOException e)
+            {
+                Debug.WriteLine(e);
+                return false;
+            }
+            catch (JsonException e)
             {
                 Debug.WriteLine(e);
                 return false;

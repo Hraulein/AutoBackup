@@ -10,7 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AutoBackup.Extensions;
-using static AutoBackup.POJO.Config.BackupSettings;
+using AutoBackup.POJO;
+using static AutoBackup.POJO.BackupSettings;
 
 namespace AutoBackup.Model
 {
@@ -33,7 +34,7 @@ namespace AutoBackup.Model
                 FieldInfo[] fields = typeof(BackupTimeUnitEnum).GetFields();
                 foreach (var fieldInfo in fields)
                 {
-                    if (fieldInfo.Name.Equals("value__"))
+                    if (fieldInfo.Name == "value__")
                         continue;
                     var unit = (BackupTimeUnitEnum)Enum.Parse(typeof(BackupTimeUnitEnum), fieldInfo.Name);
                     BackupTimeUnits.Add(unit.ToDescriptionString());

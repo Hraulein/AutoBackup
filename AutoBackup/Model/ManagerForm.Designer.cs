@@ -54,9 +54,9 @@
             this.AddFoldersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DelRowsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AttributeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.CmsMouseRightList.SuspendLayout();
@@ -252,6 +252,7 @@
             // size
             // 
             this.size.Text = "大小";
+            this.size.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.size.Width = 95;
             // 
             // lastTime
@@ -307,10 +308,6 @@
             this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.AttributeToolStripMenuItem.Text = "属性(&P)";
             this.AttributeToolStripMenuItem.Click += new System.EventHandler(this.AttributeToolStripMenuItem_Click);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // imageList1
             // 
