@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using static AutoBackup.Model.SettingForm;
+using static AutoBackup.POJO.SKTimeWarp;
 
 namespace AutoBackup.Extensions
 {
     public static class EnumExtensions
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CA2208:正确实例化参数异常", Justification = "<挂起>")]
         public static string ToDescriptionString(this Enum val)
         {
             if (val == null)
@@ -22,7 +21,7 @@ namespace AutoBackup.Extensions
         }
 
 
-        public static int GetMinutes(this BackupTimeUnitEnum BackupTimeUnit, int number)
+        public static int GetMinutes(this TimeUnitEnum BackupTimeUnit, int number)
         {
             return (int)BackupTimeUnit * number;
         }

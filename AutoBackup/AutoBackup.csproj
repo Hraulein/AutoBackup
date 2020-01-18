@@ -84,16 +84,16 @@
     <Compile Include="Extensions\BackupItemExtensions.cs" />
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Local\Config.cs" />
-    <Compile Include="Model\ManagerForm.cs">
+    <Compile Include="UI\ManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\ManagerForm.Designer.cs">
+    <Compile Include="UI\ManagerForm.Designer.cs">
       <DependentUpon>ManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\SettingForm.cs">
+    <Compile Include="UI\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\SettingForm.Designer.cs">
+    <Compile Include="UI\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="POJO\BackupItem.cs" />
@@ -106,10 +106,10 @@
     <Compile Include="Utils\Public.cs" />
     <Compile Include="Utils\SystemExtName.cs" />
     <Compile Include="Utils\SystemIcon.cs" />
-    <EmbeddedResource Include="Model\ManagerForm.resx">
+    <EmbeddedResource Include="UI\ManagerForm.resx">
       <DependentUpon>ManagerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Model\SettingForm.resx">
+    <EmbeddedResource Include="UI\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using AutoBackup.Extensions;
 using AutoBackup.POJO;
 using static AutoBackup.POJO.BackupSettings;
+using static AutoBackup.POJO.SKTimeWarp;
 
 namespace AutoBackup.Model
 {
@@ -27,20 +28,20 @@ namespace AutoBackup.Model
             /// <summary>
             /// 获取BackupTimeUnitEnum的内容和值
             /// </summary>
-            public static readonly Tuple<List<string>, List<BackupTimeUnitEnum>> BackupTimeUnitsTuple = new Func<Tuple<List<string>, List<BackupTimeUnitEnum>>>(() =>
+            public static readonly Tuple<List<string>, List<TimeUnitEnum>> BackupTimeUnitsTuple = new Func<Tuple<List<string>, List<TimeUnitEnum>>>(() =>
             {
-                var BackupTimeUnits = new List<string>();
-                var SourceNameTag = new List<BackupTimeUnitEnum>();
-                FieldInfo[] fields = typeof(BackupTimeUnitEnum).GetFields();
+                var TimeUnits = new List<string>();
+                var SourceNameTag = new List<TimeUnitEnum>();
+                FieldInfo[] fields = typeof(TimeUnitEnum).GetFields();
                 foreach (var fieldInfo in fields)
                 {
                     if (fieldInfo.Name == "value__")
                         continue;
-                    var unit = (BackupTimeUnitEnum)Enum.Parse(typeof(BackupTimeUnitEnum), fieldInfo.Name);
-                    BackupTimeUnits.Add(unit.ToDescriptionString());
+                    var unit = (TimeUnitEnum)Enum.Parse(typeof(TimeUnitEnum), fieldInfo.Name);
+                    TimeUnits.Add(unit.ToDescriptionString());
                     SourceNameTag.Add(unit);
                 }
-                return Tuple.Create(BackupTimeUnits, SourceNameTag);
+                return Tuple.Create(TimeUnits, SourceNameTag);
             })();
 
             /// <summary>
@@ -49,18 +50,7 @@ namespace AutoBackup.Model
             public static bool InitFinished = false;
         }
 
-        /// <summary>
-        /// 备份/过期时间单位
-        /// </summary>
-        public enum BackupTimeUnitEnum
-        {
-            [Description("分钟")]
-            Minute = 1,
-            [Description("小时")]
-            Hour = 60,
-            [Description("天")]
-            Day = 1440,
-        }
+
 
         /// <summary>
         /// 窗体启动
@@ -107,7 +97,8 @@ namespace AutoBackup.Model
             }
             if (ChkAutoDelete.Checked)
             {
-                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Time = Convert.ToInt32(BackupExpiredNumericUpDown.Value);
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Unit = (BackupExpiredUnit.Tag as List<TimeUnitEnum>)[BackupExpiredUnit.SelectedIndex];
             }
             else
             {
@@ -142,8 +133,9 @@ namespace AutoBackup.Model
             if (Local.Config.ConfigInstance.GlobalBackupSettings.Enable)
             {
                 ChkAutoBackup.Checked = true;
-                /* 获取备份周期,如果为空则使用默认值Day.GetMinutes(1) */
-                BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime ?? BackupTimeUnitEnum.Day.GetMinutes(1);
+                /* 获取备份周期,如果为空则使用默认值 */
+                BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Time ?? POJO.Config.Default.GlobalBackupSettings.BackupTime.Time;
+                BackupCycleUnit.SelectedIndex = Resource.BackupTimeUnitsTuple.Item1.IndexOf(Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Unit.ToDescriptionString() ?? POJO.Config.Default.GlobalBackupSettings.BackupTime.Unit.ToDescriptionString());
                 _ = Local.Config.ConfigInstance.GlobalBackupSettings.BackupType == BackupTypeEnum.FullVolume ? FullRadioButton.Checked = true : IncRadioButton.Checked = true;
             }
             else
@@ -168,7 +160,7 @@ namespace AutoBackup.Model
             {
                 return;
             }
-            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = (BackupCycleUnit.Tag as List<BackupTimeUnitEnum>)[BackupCycleUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupCycleNumericUpDown.Value));
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Time = Convert.ToInt32(BackupCycleNumericUpDown.Value);
         }
 
         private void BackupExpiredNumericUpDown_ValueChanged(object sender, EventArgs e)
@@ -177,7 +169,7 @@ namespace AutoBackup.Model
             {
                 return;
             }
-            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Time = Convert.ToInt32(BackupExpiredNumericUpDown.Value);
         }
 
         private void BackupCycleUnit_SelectedIndexChanged(object sender, EventArgs e)
@@ -186,7 +178,7 @@ namespace AutoBackup.Model
             {
                 return;
             }
-            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime = (BackupCycleUnit.Tag as List<BackupTimeUnitEnum>)[BackupCycleUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupCycleNumericUpDown.Value));
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Unit = (BackupCycleUnit.Tag as List<TimeUnitEnum>)[BackupCycleUnit.SelectedIndex];
         }
 
         private void BackupExpiredUnit_SelectedIndexChanged(object sender, EventArgs e)
@@ -195,7 +187,7 @@ namespace AutoBackup.Model
             {
                 return;
             }
-            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = (BackupExpiredUnit.Tag as List<BackupTimeUnitEnum>)[BackupExpiredUnit.SelectedIndex].GetMinutes(Convert.ToInt32(BackupExpiredNumericUpDown.Value));
+            Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Unit = (BackupExpiredUnit.Tag as List<TimeUnitEnum>)[BackupExpiredUnit.SelectedIndex];
         }
 
         private void TxtShowRootDir_TextChanged(object sender, EventArgs e)

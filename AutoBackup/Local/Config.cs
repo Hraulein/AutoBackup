@@ -82,59 +82,62 @@ namespace AutoBackup.Local
     }
     static class Config
     {
+
         /// <summary>
         /// 配置的实体类
         /// </summary>
-        public readonly static POJO.Config ConfigInstance = new Func<POJO.Config>(() =>
-        {
-            try
-            {
-                var config = JsonSerializer.Deserialize<POJO.Config>(File.ReadAllText(FilePath.SystemConfigFilePath), new JsonSerializerOptions
-                {
-                    IgnoreNullValues = true,
-                    IgnoreReadOnlyProperties = true,
-                    AllowTrailingCommas = true,
-                    PropertyNameCaseInsensitive = true
-                });
-                if (config == null)
-                {
-                    config = new POJO.Config();
-                }
-                return config;
-            }
-            catch (JsonException e)
-            {
-                Debug.WriteLine(e.ToString());
-                return new POJO.Config();
-            }
-        })();
+        public static POJO.Config ConfigInstance { get; private set; } = new Func<POJO.Config>(() =>
+          {
+              try
+              {
+                  POJO.Config.Load(File.ReadAllText(FilePath.SystemConfigFilePath));
+              }
+              catch (JsonException e)
+              {
+                  Debug.WriteLine(e.ToString());
+                  POJO.Config.Load("{}");
+              }
+              return POJO.Config.Instance;
+          })();
 
         /// <summary>
         /// 保存配置到文件
         /// </summary>
         public static bool SaveConfig()
         {
-            try
+            using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
             {
-                using (var streamWriter = new StreamWriter(FilePath.SystemConfigFilePath, false, Encoding.UTF8))
-                {
-                    streamWriter.Write(JsonSerializer.Serialize(ConfigInstance, new JsonSerializerOptions
-                    {
-                        WriteIndented = true
-                    }));
-                }
-                return true;
+                streamWriter.Write(ConfigInstance.ToString());
             }
-            catch (IOException e)
+            return true;
+        }
+
+        /// <summary>
+        /// 重新加载配置
+        /// </summary>
+        public static bool ReloadConfig()
+        {
+            var result = POJO.Config.Load(File.ReadAllText(FilePath.SystemConfigFilePath));
+            ConfigInstance = POJO.Config.Instance;
+            return result;
+        }
+
+        /// <summary>
+        /// 检查配置是否有问题
+        /// </summary>
+        /// <returns>无问题为true</returns>
+        public static bool CheckBackupGlobalSettings()
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(ConfigInstance.GlobalBackupSettings.Path);
+            if (!directoryInfo.Exists)
             {
-                Debug.WriteLine(e);
                 return false;
             }
-            catch (JsonException e)
+            if (directoryInfo.Attributes == FileAttributes.System || directoryInfo.Attributes == FileAttributes.ReadOnly)
             {
-                Debug.WriteLine(e);
                 return false;
             }
+            return true;
         }
     }
 }
