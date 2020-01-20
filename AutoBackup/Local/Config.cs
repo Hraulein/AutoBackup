@@ -125,19 +125,19 @@ namespace AutoBackup.Local
         /// <summary>
         /// 检查配置是否有问题
         /// </summary>
-        /// <returns>无问题为true</returns>
-        public static bool CheckBackupGlobalSettings()
+        /// <returns>无问题为true,null,否则第二个字符串为失败原因</returns>
+        public static Tuple<bool, string> CheckBackupGlobalSettings()
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(ConfigInstance.GlobalBackupSettings.Path);
             if (!directoryInfo.Exists)
             {
-                return false;
+                return Tuple.Create(false, "备份路径不存在");
             }
-            if (directoryInfo.Attributes == FileAttributes.System || directoryInfo.Attributes == FileAttributes.ReadOnly)
+            if (Utils.FileUtils.CheckIOWritePermission(ConfigInstance.GlobalBackupSettings.Path))
             {
-                return false;
+                return Tuple.Create(false, "备份路径无写入权限");
             }
-            return true;
+            return Tuple.Create<bool, string>(true, null);
         }
     }
 }
