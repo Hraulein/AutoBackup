@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Windows.Forms;
+using AutoBackup.Extensions;
+using System.Security;
+using System.Diagnostics;
 
 namespace AutoBackup.Utils
 {
@@ -20,7 +24,7 @@ namespace AutoBackup.Utils
             {
                 FileInfo info = new FileInfo(filepath);
                 long filesize = info.Length;
-                return filesize ; //返回大小
+                return filesize; //返回大小
             }
             else
                 return null;
@@ -30,37 +34,47 @@ namespace AutoBackup.Utils
         /// </summary>
         /// <param name="dirPath">文件夹目录</param>
         /// <returns></returns>
-        public static long GetFolderLength(string dirPath)
+        public static Task<long> GetFolderLength(DirectoryInfo di)
         {
-            long len = 0;
-            if (Directory.Exists(dirPath))
+            return Task.Run(() =>
             {
+                long len = 0;
                 try
                 {
-                    //定义一个DirectoryInfo对象
-                    DirectoryInfo di = new DirectoryInfo(dirPath);
-                    //通过GetFiles方法，获取di目录中的所有文件的大小
+                    if (!di.Exists)
+                    {
+                        return 0;
+                    }
                     foreach (FileInfo fi in di.GetFiles())
                     {
                         len += fi.Length;
                     }
-                    //获取di中所有的文件夹，并存到一个新的对象数组中，以进行递归
                     DirectoryInfo[] dis = di.GetDirectories();
-                    if (dis.Length > 0)
+                    if (dis != null)
                     {
-                        for (int i = 0; i < dis.Length; i++)
+                        foreach (DirectoryInfo directoryInfo in dis)
                         {
-                            len += GetFolderLength(dis[i].FullName);
+                            len += GetFolderLength(directoryInfo).Result;
                         }
                     }
-                    return len ; //返回
+                    return len;
                 }
-                catch
+                catch (IOException e)
                 {
-                    return -1;
+                    Trace.TraceError(e.ToString());
+                    return 0;
                 }
-            }
-            return 0;
+                catch (SecurityException e)
+                {
+                    Trace.TraceError(e.ToString());
+                    return 0;
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    Trace.TraceError(e.ToString());
+                    return 0;
+                }
+            });
         }
     }
 }

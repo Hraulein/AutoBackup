@@ -172,12 +172,14 @@ namespace AutoBackup
                 {
                     BackupTaskType = BackupTaskTypeEnum.Folder,
                     BackupSourcePath = folderBrowserDialog1.SelectedPath,
-                    Size = Public.GetFolderLength(folderBrowserDialog1.SelectedPath),
+                    Size = null,
                     LastBackupTime = null,
                     BackupSettings = null
                 };
                 Local.Config.ConfigInstance.BackupItemsList.Add(folderItem);
-                BackupList.Items.Add(ConvertBackupItemsToListViewItem(folderItem));
+                var item = ConvertBackupItemsToListViewItem(folderItem);
+                item.FlushFolderSize();
+                BackupList.Items.Add(item);
                 Local.Config.SaveConfig();
             }
         }
