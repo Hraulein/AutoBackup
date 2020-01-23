@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoBackup.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -40,7 +41,7 @@ namespace AutoBackup.UI
         /// </summary>
         private void ItemAttributeForm_Load(object sender, EventArgs e)
         {
-            CmbCompressionType.DataSource = Enum.GetNames(typeof(POJO.BackupSettings.BackupCompression));
+            CmbCompressionType.DataSource = Enum.GetNames(typeof(POJO.BackupSettings.BackupCompression)).Select(item => ((POJO.BackupSettings.BackupCompression)Enum.Parse(typeof(POJO.BackupSettings.BackupCompression), item)).ToDescriptionString()).ToList();
         }
     }
 }
