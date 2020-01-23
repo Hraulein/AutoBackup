@@ -38,7 +38,9 @@
             this.BackupExpiredNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.BackupExpiredUnit = new System.Windows.Forms.ComboBox();
             this.PnlABSettings = new System.Windows.Forms.Panel();
+            this.IncRadioButton = new System.Windows.Forms.RadioButton();
             this.BackupCycleNumericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.FullRadioButton = new System.Windows.Forms.RadioButton();
             this.BackupCycleUnit = new System.Windows.Forms.ComboBox();
             this.ChkAutoDelete = new System.Windows.Forms.CheckBox();
             this.ChkAutoBackup = new System.Windows.Forms.CheckBox();
@@ -55,8 +57,6 @@
             this.BtnInstructions = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.FullRadioButton = new System.Windows.Forms.RadioButton();
-            this.IncRadioButton = new System.Windows.Forms.RadioButton();
             this.GrpWinService.SuspendLayout();
             this.GrpBackupSettings.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -200,6 +200,17 @@
             this.PnlABSettings.TabIndex = 5;
             this.PnlABSettings.Visible = false;
             // 
+            // IncRadioButton
+            // 
+            this.IncRadioButton.AutoSize = true;
+            this.IncRadioButton.Location = new System.Drawing.Point(281, 8);
+            this.IncRadioButton.Name = "IncRadioButton";
+            this.IncRadioButton.Size = new System.Drawing.Size(50, 21);
+            this.IncRadioButton.TabIndex = 4;
+            this.IncRadioButton.TabStop = true;
+            this.IncRadioButton.Text = "增量";
+            this.IncRadioButton.UseVisualStyleBackColor = true;
+            // 
             // BackupCycleNumericUpDown
             // 
             this.BackupCycleNumericUpDown.Location = new System.Drawing.Point(9, 6);
@@ -222,6 +233,17 @@
             0,
             0});
             this.BackupCycleNumericUpDown.ValueChanged += new System.EventHandler(this.BackupCycleNumericUpDown_ValueChanged);
+            // 
+            // FullRadioButton
+            // 
+            this.FullRadioButton.AutoSize = true;
+            this.FullRadioButton.Location = new System.Drawing.Point(219, 8);
+            this.FullRadioButton.Name = "FullRadioButton";
+            this.FullRadioButton.Size = new System.Drawing.Size(50, 21);
+            this.FullRadioButton.TabIndex = 3;
+            this.FullRadioButton.TabStop = true;
+            this.FullRadioButton.Text = "全量";
+            this.FullRadioButton.UseVisualStyleBackColor = true;
             // 
             // BackupCycleUnit
             // 
@@ -375,29 +397,6 @@
             this.label2.Size = new System.Drawing.Size(273, 16);
             this.label2.TabIndex = 6;
             this.label2.Text = "©COPYRIGHTS SK-STUDIO. ALL RIGHTS RESERVED";
-            // 
-            // FullRadioButton
-            // 
-            this.FullRadioButton.AutoSize = true;
-            this.FullRadioButton.Location = new System.Drawing.Point(219, 8);
-            this.FullRadioButton.Name = "FullRadioButton";
-            this.FullRadioButton.Size = new System.Drawing.Size(50, 21);
-            this.FullRadioButton.TabIndex = 3;
-            this.FullRadioButton.TabStop = true;
-            this.FullRadioButton.Text = "全量";
-            this.FullRadioButton.UseVisualStyleBackColor = true;
-            // 
-            // IncRadioButton
-            // 
-            this.IncRadioButton.AutoSize = true;
-            this.IncRadioButton.Location = new System.Drawing.Point(281, 8);
-            this.IncRadioButton.Name = "IncRadioButton";
-            this.IncRadioButton.Size = new System.Drawing.Size(50, 21);
-            this.IncRadioButton.TabIndex = 4;
-            this.IncRadioButton.TabStop = true;
-            this.IncRadioButton.Text = "增量";
-            this.IncRadioButton.UseVisualStyleBackColor = true;
-            this.IncRadioButton.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // SettingForm
             // 

@@ -26,7 +26,6 @@ namespace AutoBackup.Extensions
             {
                 return null;
             }
-            //return string.IsNullOrEmpty(backupItem.BackupSettings.Path) ? $"[全局]{Local.Config.ConfigInstance.GlobalBackupSettings.Path}" : backupItem.BackupSettings.Path;
             return (backupItem.BackupSettings == null || string.IsNullOrEmpty(backupItem.BackupSettings.Path)) ? $"[全局]{Local.Config.ConfigInstance.GlobalBackupSettings.Path}" : backupItem.BackupSettings.Path;
         }
         public static DirectoryInfo GetBackupPath(this BackupItem backupItem)
@@ -35,8 +34,6 @@ namespace AutoBackup.Extensions
             {
                 return null;
             }
-            //return string.IsNullOrEmpty(backupItem.BackupSettings.Path) ? new DirectoryInfo(Local.Config.ConfigInstance.GlobalBackupSettings.Path) : new DirectoryInfo(backupItem.BackupSettings.Path);
-            //return (backupItem.BackupSettings != null && string.IsNullOrEmpty(backupItem.BackupSettings.Path)) ? new DirectoryInfo(Local.Config.ConfigInstance.GlobalBackupSettings.Path) : new DirectoryInfo(backupItem.BackupSettings.Path);
             return (backupItem.BackupSettings == null || string.IsNullOrEmpty(backupItem.BackupSettings.Path)) ? new DirectoryInfo(Local.Config.ConfigInstance.GlobalBackupSettings.Path) : new DirectoryInfo(backupItem.BackupSettings.Path);
         }
     }

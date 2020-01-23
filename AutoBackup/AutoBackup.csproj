@@ -86,6 +86,12 @@
     <Compile Include="Extensions\EnumExtensions.cs" />
     <Compile Include="Extensions\LocalExtensions.cs" />
     <Compile Include="Local\Config.cs" />
+    <Compile Include="UI\ItemAttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\ItemAttributeForm.Designer.cs">
+      <DependentUpon>ItemAttributeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\ManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>

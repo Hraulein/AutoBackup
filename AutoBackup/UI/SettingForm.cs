@@ -49,29 +49,25 @@ namespace AutoBackup.Model
             /// </summary>
             public static bool InitFinished = false;
         }
-
-
-
         /// <summary>
         /// 窗体启动
         /// </summary>
         private void SettingForm_Load(object sender, EventArgs e)
         {
             Resource.InitFinished = false;
-
             /* 绑定数据源 */
             BackupCycleUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1.Clone();
             BackupCycleUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
             BackupCycleUnit.SelectedIndex = 0;
-
             /* 绑定数据源 */
             BackupExpiredUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1.Clone();
             BackupExpiredUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
             BackupExpiredUnit.SelectedIndex = 0;
-
             ReadGlobalBackupSettings();
             Console.WriteLine("备份设置:" + Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Enable);
             Resource.InitFinished = true;
+            LimitNumericUpDownValue(BackupCycleUnit, BackupCycleNumericUpDown);
+            LimitNumericUpDownValue(BackupExpiredUnit, BackupExpiredNumericUpDown);
         }
         /// <summary>
         /// 当"启用自动备份"的check属性更改时
@@ -86,7 +82,7 @@ namespace AutoBackup.Model
             Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Enable = ChkAutoBackup.Checked;
         }
         /// <summary>
-        /// 当"启动自动删除"的check属性更改时
+        /// 当"备份的有效期"的check属性更改时
         /// </summary>
         private void ChkAutoDelete_CheckedChanged(object sender, EventArgs e)
         {
@@ -135,8 +131,8 @@ namespace AutoBackup.Model
             {
                 ChkAutoBackup.Checked = true;
                 /* 获取备份周期,如果为空则使用默认值 */
-                BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Time ?? POJO.Config.Default.GlobalBackupSettings.BackupTime.Time;
-                BackupCycleUnit.SelectedIndex = Resource.BackupTimeUnitsTuple.Item1.IndexOf(Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Unit.ToDescriptionString() ?? POJO.Config.Default.GlobalBackupSettings.BackupTime.Unit.ToDescriptionString());
+                BackupCycleNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Time ?? Config.Default.GlobalBackupSettings.BackupTime.Time;
+                BackupCycleUnit.SelectedIndex = Resource.BackupTimeUnitsTuple.Item1.IndexOf(Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime?.Unit.ToDescriptionString() ?? Config.Default.GlobalBackupSettings.BackupTime.Unit.ToDescriptionString());
                 _ = Local.Config.ConfigInstance.GlobalBackupSettings.BackupType == BackupTypeEnum.FullVolume ? FullRadioButton.Checked = true : IncRadioButton.Checked = true;
             }
             else
@@ -148,13 +144,40 @@ namespace AutoBackup.Model
             if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Enable)
             {
                 ChkAutoDelete.Checked = true;
+                BackupExpiredNumericUpDown.Value = Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime?.Time ?? Config.Default.GlobalBackupSettings.ExpiredTime.Time;
+                BackupExpiredUnit.SelectedIndex = Resource.BackupTimeUnitsTuple.Item1.IndexOf(Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime?.Unit.ToDescriptionString() ?? Config.Default.GlobalBackupSettings.ExpiredTime.Unit.ToDescriptionString());
             }
             else
             {
                 ChkAutoDelete.Checked = false;
             }
         }
+        /// <summary>
+        /// 根据combobox控件的不同选项限制numericupdown的min和max值
+        /// </summary>
+        private void LimitNumericUpDownValue(ComboBox comboBox, NumericUpDown numericUpDown)
+        {
+            switch (comboBox.SelectedItem.ToString())
+            {
+                case "分钟":
+                    numericUpDown.Value = numericUpDown.Minimum = 60;
+                    numericUpDown.Maximum = 1440 * 30;
+                    break;
+                case "小时":
+                    numericUpDown.Value = numericUpDown.Minimum = 1;
+                    numericUpDown.Maximum = 24 * 30;
+                    break;
+                case "天":
+                    numericUpDown.Value = numericUpDown.Minimum = 1;
+                    numericUpDown.Maximum = 30;
+                    break;
+            }
+            Console.WriteLine("min: {0} max: {1}", numericUpDown.Minimum, numericUpDown.Maximum);
+        }
 
+        /// <summary>
+        /// 选择自动备份周期的numericupdown控件
+        /// </summary>
         private void BackupCycleNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!Resource.InitFinished)
@@ -163,7 +186,9 @@ namespace AutoBackup.Model
             }
             Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Time = Convert.ToInt32(BackupCycleNumericUpDown.Value);
         }
-
+        /// <summary>
+        /// 选择备份有效期的numericupdown控件
+        /// </summary>
         private void BackupExpiredNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             if (!Resource.InitFinished)
@@ -172,21 +197,33 @@ namespace AutoBackup.Model
             }
             Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Time = Convert.ToInt32(BackupExpiredNumericUpDown.Value);
         }
-
+        /// <summary>
+        /// 自动备份周期的时间单位(combobox控件)
+        /// </summary>
         private void BackupCycleUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Resource.InitFinished)
             {
                 return;
             }
+            else
+            {
+                LimitNumericUpDownValue(BackupCycleUnit, BackupCycleNumericUpDown);
+            }
             Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Unit = (BackupCycleUnit.Tag as List<TimeUnitEnum>)[BackupCycleUnit.SelectedIndex];
         }
-
+        /// <summary>
+        /// 备份有效期的时间单位(combobox控件)
+        /// </summary>
         private void BackupExpiredUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Resource.InitFinished)
             {
                 return;
+            }
+            else
+            {
+                LimitNumericUpDownValue(BackupExpiredUnit, BackupExpiredNumericUpDown);
             }
             Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Unit = (BackupExpiredUnit.Tag as List<TimeUnitEnum>)[BackupExpiredUnit.SelectedIndex];
         }
@@ -219,9 +256,5 @@ namespace AutoBackup.Model
             Local.Config.ConfigInstance.GlobalBackupSettings.BackupType = BackupTypeEnum.Increment;
         }
 
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -44,6 +44,9 @@ namespace AutoBackup
             ElevatedDragDropManager.Instance.ElevatedDragDrop += BackupList_DragDrop;
         }
 
+        /// <summary>
+        /// 拖拽添加
+        /// </summary>
         private void BackupList_DragDrop(object sender, ElevatedDragDropArgs e)
         {
             if (e.HWnd == BackupList.Handle)
@@ -99,14 +102,12 @@ namespace AutoBackup
                     sizeString = directoryInfo.Exists ? FileUtils.GetSizeString(Convert.ToInt64(backupItem.Size)) : "文件夹不存在";
                 }
             }
-
             listItem.SubItems.AddRange(new ListViewItem.ListViewSubItem[]
             {
                 new ListViewItem.ListViewSubItem(listItem, itemState ? "√": "×"), // 备份的任务状态
                 new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSourcePath), // 备份的源路径
                 new ListViewItem.ListViewSubItem(listItem, sizeString),
                 new ListViewItem.ListViewSubItem(listItem, backupItem.LastBackupTime?.ToString() ?? "从未备份"), // 上次备份时间
-                //new ListViewItem.ListViewSubItem(listItem, backupItem.BackupSettings?.Path ?? "跟随设置"), // 备份路径的单独设置(默认全局)
                 new ListViewItem.ListViewSubItem(listItem, backupItem.GetBackupPathString()),
                 new ListViewItem.ListViewSubItem(listItem, "Undefined") // 是否压缩备份
             });
@@ -208,11 +209,13 @@ namespace AutoBackup
             BtnDelRows_Click(sender, e);
         }
         /// <summary>
-        /// 属性
+        /// 项目属性
         /// </summary>
         private void AttributeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            Model.SettingForm setting = new Model.SettingForm();
+            setting.ShowDialog();
+            
         }
 
         #endregion
@@ -237,6 +240,14 @@ namespace AutoBackup
             {
                 BackupList.Items.Add(ConvertBackupItemsToListViewItem(item));
             }
+        }
+        /// <summary>
+        /// 检查是否设置了备份路径
+        /// </summary>
+        private void CheckBackupPath()
+        {
+           var str = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
+            Console.WriteLine(str);
         }
     }
 }
