@@ -213,9 +213,8 @@ namespace AutoBackup
         /// </summary>
         private void AttributeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Model.SettingForm setting = new Model.SettingForm();
-            setting.ShowDialog();
-            
+            UI.ItemAttributeForm itemAttribute = new UI.ItemAttributeForm();
+            itemAttribute.ShowDialog();
         }
 
         #endregion
