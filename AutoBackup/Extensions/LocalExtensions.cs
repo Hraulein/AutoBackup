@@ -10,6 +10,13 @@ using System.Windows.Forms;
 
 namespace AutoBackup.Extensions
 {
+    public static partial class CloneExtensions
+    {
+        public static List<T> Clone<T>(this IList<T> listToClone) where T : ICloneable
+        {
+            return listToClone.Select(item => (T)item.Clone()).ToList();
+        }
+    }
     public static partial class ListViewItemExtensions
     {
         public static BackupItem GetBackupItem(this ListViewItem listViewItem)

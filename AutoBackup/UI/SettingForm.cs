@@ -60,12 +60,12 @@ namespace AutoBackup.Model
             Resource.InitFinished = false;
 
             /* 绑定数据源 */
-            BackupCycleUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1;
+            BackupCycleUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1.Clone();
             BackupCycleUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
             BackupCycleUnit.SelectedIndex = 0;
 
             /* 绑定数据源 */
-            BackupExpiredUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1;
+            BackupExpiredUnit.DataSource = Resource.BackupTimeUnitsTuple.Item1.Clone();
             BackupExpiredUnit.Tag = Resource.BackupTimeUnitsTuple.Item2;
             BackupExpiredUnit.SelectedIndex = 0;
 
@@ -97,12 +97,13 @@ namespace AutoBackup.Model
             }
             if (ChkAutoDelete.Checked)
             {
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Enable = true;
                 Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Time = Convert.ToInt32(BackupExpiredNumericUpDown.Value);
                 Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Unit = (BackupExpiredUnit.Tag as List<TimeUnitEnum>)[BackupExpiredUnit.SelectedIndex];
             }
             else
             {
-                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime = null;
+                Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Enable = false;
             }
         }
         /// <summary>
