@@ -42,6 +42,7 @@ namespace AutoBackup
             }
             ElevatedDragDropManager.Instance.EnableDragDrop(BackupList.Handle);
             ElevatedDragDropManager.Instance.ElevatedDragDrop += BackupList_DragDrop;
+            CheckBackupPath();
         }
 
         /// <summary>
@@ -109,7 +110,7 @@ namespace AutoBackup
                 new ListViewItem.ListViewSubItem(listItem, sizeString),
                 new ListViewItem.ListViewSubItem(listItem, backupItem.LastBackupTime?.ToString() ?? "从未备份"), // 上次备份时间
                 new ListViewItem.ListViewSubItem(listItem, backupItem.GetBackupPathString()),
-                new ListViewItem.ListViewSubItem(listItem, "Undefined") // 是否压缩备份
+                new ListViewItem.ListViewSubItem(listItem, "不压缩") // 是否压缩备份
             });
             listItem.BackColor = itemState ? Color.FromArgb(255, 255, 255) : Color.FromArgb(255, 192, 192);
             return listItem;
@@ -208,13 +209,21 @@ namespace AutoBackup
         {
             BtnDelRows_Click(sender, e);
         }
+
+        UI.ItemAttributeForm itemAttribute;
+
         /// <summary>
         /// 项目属性
         /// </summary>
         private void AttributeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            UI.ItemAttributeForm itemAttribute = new UI.ItemAttributeForm();
-            itemAttribute.ShowDialog();
+            if (itemAttribute == null || itemAttribute.IsDisposed)
+            {
+                itemAttribute = new UI.ItemAttributeForm();
+                itemAttribute.Show(this);
+            }
+            else
+                itemAttribute.Activate();
         }
 
         #endregion
@@ -245,8 +254,7 @@ namespace AutoBackup
         /// </summary>
         private void CheckBackupPath()
         {
-           var str = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
-            Console.WriteLine(str);
+            string.IsNullOrEmpty(Local.Config.ConfigInstance.GlobalBackupSettings.Path);
         }
     }
 }

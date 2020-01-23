@@ -279,35 +279,35 @@
             this.DelRowsToolStripMenuItem,
             this.AttributeToolStripMenuItem});
             this.CmsMouseRightList.Name = "CmsMouseRightList";
-            this.CmsMouseRightList.Size = new System.Drawing.Size(152, 92);
+            this.CmsMouseRightList.Size = new System.Drawing.Size(154, 92);
             this.CmsMouseRightList.Opened += new System.EventHandler(this.CmsMouseRightList_Opened);
             // 
             // AddFilesToolStripMenuItem
             // 
             this.AddFilesToolStripMenuItem.Name = "AddFilesToolStripMenuItem";
-            this.AddFilesToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.AddFilesToolStripMenuItem.Text = "添加文件(&E)";
+            this.AddFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AddFilesToolStripMenuItem.Text = "添加文件(&F)";
             this.AddFilesToolStripMenuItem.Click += new System.EventHandler(this.AddFilesToolStripMenuItem_Click);
             // 
             // AddFoldersToolStripMenuItem
             // 
             this.AddFoldersToolStripMenuItem.Name = "AddFoldersToolStripMenuItem";
-            this.AddFoldersToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.AddFoldersToolStripMenuItem.Text = "添加文件夹(&T)";
+            this.AddFoldersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.AddFoldersToolStripMenuItem.Text = "添加文件夹(&H)";
             this.AddFoldersToolStripMenuItem.Click += new System.EventHandler(this.AddFoldersToolStripMenuItem_Click);
             // 
             // DelRowsToolStripMenuItem
             // 
             this.DelRowsToolStripMenuItem.Name = "DelRowsToolStripMenuItem";
-            this.DelRowsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.DelRowsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.DelRowsToolStripMenuItem.Text = "删除项目(&D)";
             this.DelRowsToolStripMenuItem.Click += new System.EventHandler(this.DelRowsToolStripMenuItem_Click);
             // 
             // AttributeToolStripMenuItem
             // 
             this.AttributeToolStripMenuItem.Name = "AttributeToolStripMenuItem";
-            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.AttributeToolStripMenuItem.Text = "属性(&P)";
+            this.AttributeToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.AttributeToolStripMenuItem.Text = "属性(&R)";
             this.AttributeToolStripMenuItem.Click += new System.EventHandler(this.AttributeToolStripMenuItem_Click);
             // 
             // imageList1

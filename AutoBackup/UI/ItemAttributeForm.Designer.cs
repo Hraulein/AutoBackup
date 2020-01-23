@@ -280,7 +280,7 @@
             this.MinimizeBox = false;
             this.Name = "ItemAttributeForm";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = " ";
             this.Load += new System.EventHandler(this.ItemAttributeForm_Load);
             this.panel1.ResumeLayout(false);
