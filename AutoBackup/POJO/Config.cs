@@ -4,20 +4,27 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using System.Windows.Forms;
 
 namespace AutoBackup.POJO
 {
     public class SKTimeWarp
     {
         /// <summary>
+        /// 启用
+        /// </summary>
+        [JsonPropertyName("Enable")]
+        public bool Enable { get; set; } = false;
+
+        /// <summary>
         /// 时间
         /// </summary>
-        public int Time { get; set; }
+        public int Time { get; set; } = 1;
 
         /// <summary>
         /// 具体单位
         /// </summary>
-        public TimeUnitEnum Unit { get; set; }
+        public TimeUnitEnum Unit { get; set; } = TimeUnitEnum.Day;
 
         /// <summary>
         /// 时间单位枚举
@@ -65,9 +72,8 @@ namespace AutoBackup.POJO
         public BackupSettings()
         {
             Path = "";
-            Enable = true;
-            BackupTime = null;
-            ExpiredTime = null;
+            BackupTime = new SKTimeWarp();
+            ExpiredTime = new SKTimeWarp();
             Compression = BackupCompression.NotCompressed;
         }
 
@@ -77,14 +83,9 @@ namespace AutoBackup.POJO
         [JsonPropertyName("Path")]
         public string Path { get; set; }
 
-        /// <summary>
-        /// 启用自动备份
-        /// </summary>
-        [JsonPropertyName("Enable")]
-        public bool Enable { get; set; }
 
         /// <summary>
-        /// 自动备份的周期(未设置请使用null)
+        /// 自动备份的周期未设置请将Enable置为false
         /// </summary>
         [JsonPropertyName("BackupTime")]
         public SKTimeWarp BackupTime { get; set; }
@@ -97,7 +98,7 @@ namespace AutoBackup.POJO
         public BackupTypeEnum BackupType { get; set; }
 
         /// <summary>
-        /// 过期时间, 无限制请使用null
+        /// 过期时间, 无限制请将Enable置为false
         /// </summary>
         [JsonPropertyName("ExpiredTime")]
         public SKTimeWarp ExpiredTime { get; set; }
@@ -118,12 +119,10 @@ namespace AutoBackup.POJO
             {
                 BackupTime = new SKTimeWarp()
                 {
-                    Time = 1,
-                    Unit = SKTimeWarp.TimeUnitEnum.Day
+                    Enable = true,
                 },
-                Enable = true,
                 BackupType = BackupSettings.BackupTypeEnum.FullVolume,
-                ExpiredTime = null,
+                ExpiredTime = new SKTimeWarp(),
                 Path = "",
             };
             BackupItemsList = new List<BackupItem>();

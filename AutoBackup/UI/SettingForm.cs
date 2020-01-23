@@ -70,7 +70,7 @@ namespace AutoBackup.Model
             BackupExpiredUnit.SelectedIndex = 0;
 
             ReadGlobalBackupSettings();
-            Console.WriteLine("备份设置:" + Local.Config.ConfigInstance.GlobalBackupSettings.Enable);
+            Console.WriteLine("备份设置:" + Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Enable);
             Resource.InitFinished = true;
         }
         /// <summary>
@@ -83,7 +83,7 @@ namespace AutoBackup.Model
             {
                 return;
             }
-            Local.Config.ConfigInstance.GlobalBackupSettings.Enable = ChkAutoBackup.Checked;
+            Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Enable = ChkAutoBackup.Checked;
         }
         /// <summary>
         /// 当"启动自动删除"的check属性更改时
@@ -130,7 +130,7 @@ namespace AutoBackup.Model
             /* 备份保存目录 */
             TxtShowRootDir.Text = Local.Config.ConfigInstance.GlobalBackupSettings.Path;
             /* 自动备份设置 */
-            if (Local.Config.ConfigInstance.GlobalBackupSettings.Enable)
+            if (Local.Config.ConfigInstance.GlobalBackupSettings.BackupTime.Enable)
             {
                 ChkAutoBackup.Checked = true;
                 /* 获取备份周期,如果为空则使用默认值 */
@@ -144,13 +144,13 @@ namespace AutoBackup.Model
                 BackupCycleUnit.SelectedIndex = -1;
             }
             /* 备份有效期 */
-            if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime == null)
+            if (Local.Config.ConfigInstance.GlobalBackupSettings.ExpiredTime.Enable)
             {
-                ChkAutoDelete.Checked = false;
+                ChkAutoDelete.Checked = true;
             }
             else
             {
-                ChkAutoDelete.Checked = true;
+                ChkAutoDelete.Checked = false;
             }
         }
 
